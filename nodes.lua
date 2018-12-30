@@ -757,7 +757,7 @@ minetest.register_node("nssb:morvalar_block", {
 })
 
 minetest.register_node("nssb:dis_morvalar_block", {
-	description = "Disactivated Morvalar Block",
+	description = "Deactivated Morvalar Block",
 	tiles = {"dis_morvalar_block.png"},
 	on_punch = function(pos, node, puncher)
 		if puncher:get_wielded_item():get_name() == "nssm:superior_energy_globe" then
@@ -774,5 +774,9 @@ minetest.register_abm({
 	action = function(pos, node)
 		minetest.remove_node(pos)
 		minetest.add_entity(pos, "nssm:morvalar")
+
+        minetest.after(5, function()
+			minetest.set_node(pos, {name="nssb:dis_morvalar_block"})
+        end)
 	end
 })
