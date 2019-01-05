@@ -754,6 +754,7 @@ minetest.register_node("nssb:morvalar_block", {
 	description = "Morvalar Block",
 	tiles = {"morvalar_block.png"},
 	light_source = 13,
+	on_blast = function() end,
 })
 
 minetest.register_node("nssb:dis_morvalar_block", {
@@ -764,6 +765,7 @@ minetest.register_node("nssb:dis_morvalar_block", {
 			minetest.set_node(pos, {name="nssb:morvalar_block"})
 		end
 	end,
+	on_blast = function() end,
 })
 
 minetest.register_abm({
