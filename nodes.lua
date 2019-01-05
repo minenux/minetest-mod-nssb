@@ -492,7 +492,7 @@ minetest.register_node("nssb:fall_morentir", {
 minetest.register_node("nssb:indistructible_morentir", {
 	description = "Dark Indistructible Stone",
 	tiles = {"morentir.png"},
-	--groups = {oddly_breakable_by_hand = 2},
+	groups = {unbreakable = 1},
 	is_ground_content = false,
 	sounds = default.node_sound_stone_defaults(),
 	on_blast = function() end,
@@ -753,6 +753,7 @@ minetest.register_craftitem("nssb:moranga_ingot", {
 minetest.register_node("nssb:morvalar_block", {
 	description = "Morvalar Block",
 	tiles = {"morvalar_block.png"},
+	groups = {unbreakable = 1},
 	light_source = 13,
 	on_blast = function() end,
 })
@@ -760,11 +761,7 @@ minetest.register_node("nssb:morvalar_block", {
 minetest.register_node("nssb:dis_morvalar_block", {
 	description = "Deactivated Morvalar Block",
 	tiles = {"dis_morvalar_block.png"},
-	on_punch = function(pos, node, puncher)
-		if puncher:get_wielded_item():get_name() == "nssm:superior_energy_globe" then
-			minetest.set_node(pos, {name="nssb:morvalar_block"})
-		end
-	end,
+	groups = {unbreakable = 1},
 	on_blast = function() end,
 })
 
