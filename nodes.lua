@@ -73,7 +73,6 @@ minetest.register_node("nssb:marine_meselamp", {
 	tiles = {"marine_meselamp.png"},
 	is_ground_content = false,
 	groups = {cracky=3},
-	drop = "",
 	light_source = 15,
 	sounds = default.node_sound_glass_defaults(),
 })
@@ -83,7 +82,6 @@ minetest.register_node("nssb:morlamp", {
 	tiles = {"morlamp.png"},
 	is_ground_content = false,
 	groups = {cracky=3},
-	drop = "",
 	light_source = 15,
 	sounds = default.node_sound_glass_defaults(),
 })
