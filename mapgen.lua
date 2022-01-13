@@ -870,7 +870,7 @@ minetest.register_abm({
 	function(pos, node)
 		for _,obj in ipairs(minetest.get_objects_inside_radius(pos, 7)) do
 			if obj:is_player() then
-				nodeupdate(pos)
+				minetest.check_for_falling(pos)
 			end
 		end
 	end
