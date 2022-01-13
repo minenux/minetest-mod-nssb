@@ -886,7 +886,7 @@ minetest.register_abm({
 	function(pos, node)
 		for _,obj in ipairs(minetest.get_objects_inside_radius(pos, 5)) do
 			if obj:is_player() then
-				explosion(pos, 3, 0, 1)
+				tnt.boom(pos,{radious = 3,dmage_radious = 0})
 			end
 		end
 	end
