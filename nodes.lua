@@ -229,7 +229,7 @@ minetest.register_node("nssb:web_cocoon", {
                  rarity = 4
              },
 			  {
-                 items = {'node "nssm:web 1'},
+                 items = {'node "nssm:web" 1'},
                  rarity = 4
              },
              {
@@ -283,7 +283,7 @@ minetest.register_node("nssb:web_cocoon", {
                  rarity = 20
              },
 			 {
-                 items = {'node "nssm:nssm:mantis_claw" 1'},
+                 items = {'node "nssm:mantis_claw" 1'},
                  rarity = 20
              },
 			 {
