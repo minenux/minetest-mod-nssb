@@ -75,7 +75,7 @@ minetest.register_node("nssb:marine_meselamp", {
 	is_ground_content = false,
 	groups = {cracky = 3},
 	drop = "",
-	light_source = 15,
+	light_source = 14,
 	sounds = default.node_sound_glass_defaults()
 })
 
@@ -85,7 +85,7 @@ minetest.register_node("nssb:morlamp", {
 	is_ground_content = false,
 	groups = {cracky = 3},
 	drop = "",
-	light_source = 15,
+	light_source = 14,
 	sounds = default.node_sound_glass_defaults()
 })
 
@@ -143,7 +143,7 @@ minetest.register_node("nssb:liana", {
 minetest.register_node("nssb:vertical_web", {
 	description = "Vertical Web",
 	inventory_image = "vertical_web.png",
-	tile_images = {"vertical_web.png"} ,
+	tile = {"vertical_web.png"} ,
 	drawtype = "plantlike",
 	paramtype = "light",
 	walkable = false,
@@ -164,7 +164,7 @@ minetest.register_node("nssb:vertical_web", {
 minetest.register_node("nssb:web_cone_up", {
 	description = "Web Cone Up",
 	inventory_image = "web_cone_up.png",
-	tile_images = {"web_cone_up.png"} ,
+	tile = {"web_cone_up.png"} ,
 	drawtype = "plantlike",
 	paramtype = "light",
 	walkable = false,
@@ -185,7 +185,7 @@ minetest.register_node("nssb:web_cone_up", {
 minetest.register_node("nssb:web_cone_down", {
 	description = "Web Cone Down",
 	inventory_image = "web_cone_down.png",
-	tile_images = {"web_cone_down.png"} ,
+	tile = {"web_cone_down.png"} ,
 	drawtype = "plantlike",
 	paramtype = "light",
 	walkable = false,
@@ -290,7 +290,7 @@ function nssb_register_eggs (
 			z = pos.z + math.random(-wide, wide)
 		}
 
-		local n = minetest.env:get_node(pos1).name
+		local n = minetest.get_node(pos1).name
 
 		if n ~= "air" and n ~= "default:water_source" then
 			return
@@ -298,7 +298,7 @@ function nssb_register_eggs (
 
 		local count = 0
 
-		local objects = minetest.env:get_objects_inside_radius(pos, 12)
+		local objects = minetest.get_objects_inside_radius(pos, 12)
 
 		for _,obj in ipairs(objects) do
 			count = count + 1
@@ -341,6 +341,8 @@ function nssb_register_eggboss (
 		night, --if only at night
 		lumin) --luminosity parameter of the egg_block
 
+	if lumin > 14 then lumin = 14 end
+
 	minetest.register_node("nssb:" .. name .. "_eggboss", {
 		description = descr .. " Eggs",
 		tiles = {name .. "_eggs.png"},
@@ -364,14 +366,14 @@ function nssb_register_eggboss (
 			z = pos.z + math.random(-wide, wide)
 		}
 
-		local n = minetest.env:get_node(pos1).name
+		local n = minetest.get_node(pos1).name
 
 		if n ~= "air" and n ~= "default:water_source" then
 			return
 		end
 
 		local count = 0
-		local objects = minetest.env:get_objects_inside_radius(pos, 12)
+		local objects = minetest.get_objects_inside_radius(pos, 12)
 
 		for _,obj in ipairs(objects) do
 			count = count +1
@@ -413,7 +415,7 @@ minetest.register_abm({
 	action = function(pos, node)
 
 		local pos1 = {x = pos.x, y = pos.y + 1, z = pos.z}
-		local n = minetest.env:get_node(pos1).name
+		local n = minetest.get_node(pos1).name
 
 		if n ~= "air" then
 			return
@@ -532,7 +534,8 @@ minetest.register_node("nssb:mornen", {
 			}
 		}
 	},
-	alpha = 650,
+	--alpha = 650,
+	use_texture_alpha = "blend",
 	paramtype = "light",
 	walkable = false,
 	pointable = false,
@@ -583,7 +586,8 @@ minetest.register_node("nssb:mornen_flowing", {
 	paramtype = "light",
 	paramtype2 = "flowingliquid",
 	light_source = 10,
-	alpha = 650,
+	--alpha = 650,
+	use_texture_alpha = "blend",
 	walkable = false,
 	pointable = false,
 	diggable = false,
@@ -613,7 +617,8 @@ minetest.register_node("nssb:portal", {
 			}
 		}
 	},
-	alpha = 800,
+	--alpha = 800,
+	use_texture_alpha = "blend",
 	paramtype = "light",
 	walkable = false,
 	pointable = false,
@@ -621,7 +626,7 @@ minetest.register_node("nssb:portal", {
 	buildable_to = true,
 	is_ground_content = false,
 	drop = "",
-	light_source = 15,
+	light_source = 14,
 	liquid_range= 0,
 	drowning = 1,
 	liquid_renewable = false,
@@ -646,7 +651,8 @@ minetest.register_node("nssb:portalhome", {
 			}
 		}
 	},
-	alpha = 800,
+	--alpha = 800,
+	use_texture_alpha = "blend",
 	paramtype = "light",
 	walkable = false,
 	pointable = false,
@@ -654,7 +660,7 @@ minetest.register_node("nssb:portalhome", {
 	buildable_to = true,
 	is_ground_content = false,
 	drop = "",
-	light_source = 15,
+	light_source = 14,
 	liquid_range= 0,
 	drowning = 1,
 	liquid_renewable = false,

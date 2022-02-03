@@ -5,18 +5,20 @@ if minetest.get_modpath("moreores") then
 end
 
 
-nssb.mymapgenis = tonumber(minetest.setting_get('mymapgenis')) or 7
+nssb.mymapgenis = tonumber(minetest.settings:get('mymapgenis')) or 7
 
 if (nssb.mymapgenis ~= 6) and (nssb.mymapgenis ~= 7) then
 	nssb.mymapgenis = 7
 end
 
+-- get gneration level from settings
+local level = tonumber(minetest.settings:get("nssb.morlendor_level")) or -30000
 
 --schematichs generation
 
-local posplace = {x = 0, y = -30093, z = 0}
-local posmemory = {x = 0, y = -30092, z = 0}
-local postest = {x = 5, y = -30091, z = 6}
+local posplace = {x = 0, y = level - 93, z = 0}
+local posmemory = {x = 0, y = level - 92, z = 0}
+local postest = {x = 5, y = level - 91, z = 6}
 
 function nssb_register_buildings(
 	build, -- name of the schematic
@@ -46,9 +48,9 @@ function nssb_register_buildings(
 				local pos1 = {x=i, y=j, z=k}
 				local pos2 = {x=i+down, y=j-1, z=k+down}
 				local pos3 = {x=i, y=j+above, z=k}
-				local n = minetest.env:get_node(pos1).name
-				local u = minetest.env:get_node(pos2).name
-				local d = minetest.env:get_node(pos3).name
+				local n = minetest.get_node(pos1).name
+				local u = minetest.get_node(pos2).name
+				local d = minetest.get_node(pos3).name
 				if (downblock==nil) then
 					u = downblock
 				end
@@ -70,18 +72,18 @@ function nssb_register_buildings(
 					for dz = 0,side do
 						local dy=posd.y-1
 						local f = {x = posd.x+dx, y=dy, z=posd.z+dz}
-						local fg = minetest.env:get_node(f).name
+						local fg = minetest.get_node(f).name
 						if ice == false then
 							while fg=="air" do
-								minetest.env:set_node(f, {name="default:dirt"})
+								minetest.set_node(f, {name="default:dirt"})
 								f.y=f.y-1
-								fg = minetest.env:get_node(f).name
+								fg = minetest.get_node(f).name
 							end
 						else
 							while fg=="air" do
-									minetest.env:set_node(f, {name="default:ice"})
+									minetest.set_node(f, {name="default:ice"})
 									f.y=f.y-1
-									fg = minetest.env:get_node(f).name
+									fg = minetest.get_node(f).name
 							end
 						end
 					end
@@ -140,7 +142,7 @@ function nssb_register_buildings(
 					end
 				end
 				local pos1={x=i, y=j, z=k}
-				local n = minetest.env:get_node(pos1).name
+				local n = minetest.get_node(pos1).name
 				if minetest.find_node_near(pos1, radius, "default:lava_source")or flag==1 then
 					return
 				else
@@ -233,7 +235,7 @@ nssb_register_buildings ('blocobiggesthouse', 4, "default:stone", 0, "air",  0, 
 --nodes gen
 
 --This dimension is "divided" in in 7 layer.
---1st layer from 30000 to 30007 is indistructible, made of indistructible morentir
+--1st layer is indistructible, made of indistructible morentir
 
 
 
@@ -245,8 +247,8 @@ for i=1,9 do
 		clust_scarcity = 1,
 		clust_num_ores = 1,
 		clust_size     = 1,
-		y_min          = -30044,
-		y_max          = -30037,
+		y_min          = level - 44,
+		y_max          = level - 37,
 	})
 end
 
@@ -259,13 +261,13 @@ if moreores then
 			clust_scarcity = 1,
 			clust_num_ores = 1,
 			clust_size     = 1,
-			y_min          = -30044,
-			y_max          = -30037,
+			y_min          = level - 44,
+			y_max          = level - 37,
 		})
 	end
 end
 
---2� layer from 30008 to 30028, is "stalagmitic", have bats and morelentir
+--2nd layer is "stalagmitic", have bats and morelentir
 
 local function replace2(old, new)
 	for i=1,9 do
@@ -276,8 +278,8 @@ local function replace2(old, new)
 			clust_scarcity = 1,
 			clust_num_ores = 1,
 			clust_size     = 1,
-			y_min          = -30065,
-			y_max          = -30045,
+			y_min          = level - 65,
+			y_max          = level - 45,
 		})
 	end
 end
@@ -308,8 +310,8 @@ minetest.register_ore({
 		wherein         = "nssb:morentir",
 		clust_scarcity  = 15 * 15 * 15,
 		clust_size      = 6,
-		y_min           = -30065,
-		y_max           = -30045,
+		y_min           = level - 65,
+		y_max           = level - 45,
 		noise_threshold = 0.0,
 		noise_params    = {
 			offset = 0.5,
@@ -328,13 +330,13 @@ minetest.register_ore({
 			clust_scarcity = 1,
 			clust_num_ores = 1,
 			clust_size     = 1,
-			y_min          = -30066,
-			y_max          = -30058,
+			y_min          = level - 66,
+			y_max          = level - 58,
 		})
 end
 
 
---3� layer from 30029 to 30077 is made by air
+--3rd layer is made by air
 
 for i=1,32 do
 	minetest.register_ore({
@@ -344,8 +346,8 @@ for i=1,32 do
 		clust_scarcity = 1,
 		clust_num_ores = 1,
 		clust_size     = 1,
-		y_min          = -30093,
-		y_max          = -30066,
+		y_min          = level - 93,
+		y_max          = level - 66,
 	})
 end
 if moreores then
@@ -357,8 +359,8 @@ if moreores then
 			clust_scarcity = 1,
 			clust_num_ores = 1,
 			clust_size     = 1,
-			y_min          = -30093,
-			y_max          = -30066,
+			y_min          = level - 93,
+			y_max          = level - 66,
 		})
 	end
 end
@@ -369,8 +371,8 @@ minetest.register_ore({
 		wherein         = "air",
 		clust_scarcity  = 10 * 10 * 10,
 		clust_size      = 3,
-		y_min           = -30068,
-		y_max           = -30065,
+		y_min           = level - 68,
+		y_max           = level - 65,
 		noise_threshold = 0.0,
 		noise_params    = {
 			offset = 0.5,
@@ -388,8 +390,8 @@ minetest.register_ore({
 		wherein         = "air",
 		clust_scarcity  = 16 * 16 * 16,
 		clust_size      = 6,
-		y_min           = -30071,
-		y_max           = -30065,
+		y_min           = level - 71,
+		y_max           = level - 65,
 		noise_threshold = 0.0,
 		noise_params    = {
 			offset = 0.5,
@@ -407,8 +409,8 @@ minetest.register_ore({
 		wherein         = "nssb:morentir",
 		clust_scarcity  = 15 * 15 * 15,
 		clust_size      = 6,
-		y_min           = -30092,
-		y_max           = -30066,
+		y_min           = level - 92,
+		y_max           = level - 66,
 		noise_threshold = 0.0,
 		noise_params    = {
 			offset = 0.5,
@@ -426,8 +428,8 @@ minetest.register_ore({
 		wherein         = "air",
 		clust_scarcity  = 13 * 13 * 13,
 		clust_size      = 6,
-		y_min           = -30095,
-		y_max           = -30089,
+		y_min           = level - 95,
+		y_max           = level - 89,
 		noise_threshold = 0.0,
 		noise_params    = {
 			offset = 0.5,
@@ -445,8 +447,8 @@ minetest.register_ore({
 		wherein         = "air",
 		clust_scarcity  = 11 * 11 * 11,
 		clust_size      = 5,
-		y_min           = -30095,
-		y_max           = -30090,
+		y_min           = level - 95,
+		y_max           = level - 90,
 		noise_threshold = 0.0,
 		noise_params    = {
 			offset = 0.5,
@@ -464,8 +466,8 @@ minetest.register_ore({
 		wherein         = "air",
 		clust_scarcity  = 10 * 10 * 10,
 		clust_size      = 4,
-		y_min           = -30095,
-		y_max           = -30091,
+		y_min           = level - 95,
+		y_max           = level - 91,
 		noise_threshold = 0.0,
 		noise_params    = {
 			offset = 0.5,
@@ -483,8 +485,8 @@ minetest.register_ore({
 		wherein         = "air",
 		clust_scarcity  = 10 * 10 * 10,
 		clust_size      = 10,
-		y_min           = -30095,
-		y_max           = -30089,
+		y_min           = level - 95,
+		y_max           = level - 89,
 		noise_threshold = 0.0,
 		noise_params    = {
 			offset = 1,
@@ -496,7 +498,7 @@ minetest.register_ore({
 		},
 	})
 
---4�layer from  30078 to 30091 is a plain with mobs, fire, water...
+--4th layer is a plain with mobs, fire, water...
 
 local function replace4(old, new)
 	for i=1,9 do
@@ -507,8 +509,8 @@ local function replace4(old, new)
 			clust_scarcity = 1,
 			clust_num_ores = 1,
 			clust_size     = 1,
-			y_min          = -30107,
-			y_max          = -30094,
+			y_min          = level - 107,
+			y_max          = level - 94,
 		})
 	end
 end
@@ -540,8 +542,8 @@ minetest.register_ore({
 			clust_scarcity = 7*7*7,
 			clust_num_ores = 1,
 			clust_size     = 1,
-			y_min          = -30094,
-			y_max          = -30093,
+			y_min          = level - 94,
+			y_max          = level - 93,
 		})
 
 minetest.register_ore({
@@ -551,8 +553,8 @@ minetest.register_ore({
 			clust_scarcity = 4*4*4,
 			clust_num_ores = 1,
 			clust_size     = 1,
-			y_min          = -30094,
-			y_max          = -30093,
+			y_min          = level - 94,
+			y_max          = level - 93,
 		})
 
 minetest.register_ore({
@@ -562,11 +564,11 @@ minetest.register_ore({
 			clust_scarcity = 18*18*18,
 			clust_num_ores = 1,
 			clust_size     = 1,
-			y_min          = -30094,
-			y_max          = -30093,
+			y_min          = level - 94,
+			y_max          = level - 93,
 		})
 
---5� layer from 30092 to 30140 is underground with caves
+--5th layer is underground with caves
 
 local function replace5(old, new)
 	for i=1,9 do
@@ -577,8 +579,8 @@ local function replace5(old, new)
 			clust_scarcity = 1,
 			clust_num_ores = 1,
 			clust_size     = 1,
-			y_min          = -30156,
-			y_max          = -30108,
+			y_min          = level - 156,
+			y_max          = level - 108,
 		})
 	end
 end
@@ -589,8 +591,8 @@ minetest.register_ore({
 		wherein         = "air",
 		clust_scarcity  = 16 * 16 * 16,
 		clust_size      = 6,
-		y_min           = -30204,
-		y_max           = -30109,
+		y_min           = level - 204,
+		y_max           = level - 109,
 		noise_threshold = 0.0,
 		noise_params    = {
 			offset = 0.5,
@@ -623,7 +625,8 @@ if moreores then
 	replace5("moreores:mineral_silver","nssb:morentir")
 	replace5("moreores:mineral_mithril","nssb:moranga")
 end
---6� layer from 30141 to 30189 is underground with other caves and the special metal
+
+--6th layer is underground with other caves and the special metal
 
 local function replace6(old, new)
 	for i=1,9 do
@@ -634,8 +637,8 @@ local function replace6(old, new)
 			clust_scarcity = 1,
 			clust_num_ores = 1,
 			clust_size     = 1,
-			y_min          = -30205,
-			y_max          = -30157,
+			y_min          = level - 205,
+			y_max          = level - 157,
 		})
 	end
 end
@@ -669,11 +672,11 @@ minetest.register_ore({
 			clust_scarcity = 13*13*13,
 			clust_num_ores = 1,
 			clust_size     = 1,
-			y_min          = -30205,
-			y_max          = -30157,
+			y_min          = level - 205,
+			y_max          = level - 157,
 		})
 
---7� layer from 30190 to 30197 is indistructible
+--7th layer is indistructible
 
 for i=1,9 do
 	minetest.register_ore({
@@ -683,8 +686,8 @@ for i=1,9 do
 		clust_scarcity = 1,
 		clust_num_ores = 1,
 		clust_size     = 1,
-		y_min          = -30213,
-		y_max          = -30206,
+		y_min          = level - 213,
+		y_max          = level - 206,
 	})
 end
 
@@ -697,8 +700,8 @@ if moreores then
 			clust_scarcity = 1,
 			clust_num_ores = 1,
 			clust_size     = 1,
-			y_min          = -30213,
-			y_max          = -30206,
+			y_min          = level - 213,
+			y_max          = level - 206,
 		})
 	end
 end
@@ -711,15 +714,15 @@ for i=1,12 do
 		clust_scarcity = 1,
 		clust_num_ores = 1,
 		clust_size     = 1,
-		y_min          = -30207,
-		y_max          = -30045,
+		y_min          = level - 207,
+		y_max          = level - 45,
 	})
 end
 
 --Place the buildings in the morlendor
-posmorvalarblock = {x=827, y=-30094, z=-817}
-posplace = {x=0, y=-30093, z=0}
-posmemory = {x=0, y=-30092, z=0}
+posmorvalarblock = {x=827, y= level - 94, z=-817}
+posplace = {x=0, y= level - 93, z=0}
+posmemory = {x=0, y= level - 92, z=0}
 if posplace then
 	--[[if name11 == "ignore" then
 		local pmin, pmax = minetest.get_voxel_manip():read_from_map(posplace, posplace)
@@ -734,7 +737,7 @@ if posplace then
 	end, posplace)
 end
 
-posarena = {x=777, y=-30096, z=-777}
+posarena = {x=777, y= level - 96, z=-777}
 if posarena then
 	--minetest.get_voxel_manip():read_from_map(posplace, posplace)
 	if not minetest.get_node_or_nil(posarena) then
@@ -743,17 +746,17 @@ if posarena then
 	-- teleport the player
 	minetest.after(5, function(posarena)
 		minetest.place_schematic(posarena, minetest.get_modpath("nssb").."/schems/arena51.mts", "0", {}, true)
-		minetest.place_schematic({x=posarena.x, y=-30096, z=posarena.z-9}, minetest.get_modpath("nssb").."/schems/arena52.mts", "0", {}, true)
-		minetest.place_schematic({x=posarena.x, y=-30096, z=posarena.z-18}, minetest.get_modpath("nssb").."/schems/arena53.mts", "0", {}, true)
-		minetest.place_schematic({x=posarena.x, y=-30096, z=posarena.z-27}, minetest.get_modpath("nssb").."/schems/arena54.mts", "0", {}, true)
-		minetest.place_schematic({x=posarena.x, y=-30096, z=posarena.z-36}, minetest.get_modpath("nssb").."/schems/arena55.mts", "0", {}, true)
-		minetest.place_schematic({x=posarena.x, y=-30096, z=posarena.z-45}, minetest.get_modpath("nssb").."/schems/arena56.mts", "0", {}, true)
-		minetest.place_schematic({x=posarena.x, y=-30096, z=posarena.z-54}, minetest.get_modpath("nssb").."/schems/arena57.mts", "0", {}, true)
-		minetest.place_schematic({x=posarena.x, y=-30096, z=posarena.z-63}, minetest.get_modpath("nssb").."/schems/arena58.mts", "0", {}, true)
-		minetest.place_schematic({x=posarena.x, y=-30096, z=posarena.z-72}, minetest.get_modpath("nssb").."/schems/arena59.mts", "0", {}, true)
-		minetest.place_schematic({x=posarena.x, y=-30096, z=posarena.z-81}, minetest.get_modpath("nssb").."/schems/arena510.mts", "0", {}, true)
-		minetest.place_schematic({x=posarena.x, y=-30096, z=posarena.z-90}, minetest.get_modpath("nssb").."/schems/arena511.mts", "0", {}, true)
-		local objects = minetest.env:get_objects_inside_radius(posmorvalarblock, 90)
+		minetest.place_schematic({x=posarena.x, y=level - 96, z=posarena.z-9}, minetest.get_modpath("nssb").."/schems/arena52.mts", "0", {}, true)
+		minetest.place_schematic({x=posarena.x, y= level - 96, z=posarena.z-18}, minetest.get_modpath("nssb").."/schems/arena53.mts", "0", {}, true)
+		minetest.place_schematic({x=posarena.x, y= level - 96, z=posarena.z-27}, minetest.get_modpath("nssb").."/schems/arena54.mts", "0", {}, true)
+		minetest.place_schematic({x=posarena.x, y=level - 96, z=posarena.z-36}, minetest.get_modpath("nssb").."/schems/arena55.mts", "0", {}, true)
+		minetest.place_schematic({x=posarena.x, y= level - 96, z=posarena.z-45}, minetest.get_modpath("nssb").."/schems/arena56.mts", "0", {}, true)
+		minetest.place_schematic({x=posarena.x, y= level - 96, z=posarena.z-54}, minetest.get_modpath("nssb").."/schems/arena57.mts", "0", {}, true)
+		minetest.place_schematic({x=posarena.x, y= level - 96, z=posarena.z-63}, minetest.get_modpath("nssb").."/schems/arena58.mts", "0", {}, true)
+		minetest.place_schematic({x=posarena.x, y= level - 96, z=posarena.z-72}, minetest.get_modpath("nssb").."/schems/arena59.mts", "0", {}, true)
+		minetest.place_schematic({x=posarena.x, y= level - 96, z=posarena.z-81}, minetest.get_modpath("nssb").."/schems/arena510.mts", "0", {}, true)
+		minetest.place_schematic({x=posarena.x, y= level - 96, z=posarena.z-90}, minetest.get_modpath("nssb").."/schems/arena511.mts", "0", {}, true)
+		local objects = minetest.get_objects_inside_radius(posmorvalarblock, 90)
 		local found = 0
 		for _,obj in ipairs(objects) do
 			if (obj:get_luaentity() and (obj:get_luaentity().name=="nssm:morvalar0" or obj:get_luaentity().name=="nssm:morvalar1" or obj:get_luaentity().name=="nssm:morvalar2" or obj:get_luaentity().name=="nssm:morvalar3" or obj:get_luaentity().name=="nssm:morvalar4" or obj:get_luaentity().name=="nssm:morvalar5" or obj:get_luaentity().name=="nssm:morvalar6" or obj:get_luaentity().name=="nssm:morvalar")) then
@@ -774,16 +777,16 @@ minetest.register_abm({
 	action = function(pos, node)
 			--minetest.chat_send_all("Ciao ciao pirloni")
 			minetest.place_schematic(posarena, minetest.get_modpath("nssb").."/schems/arena51.mts", "0", {}, true)
-			minetest.place_schematic({x=posarena.x, y=-30096, z=posarena.z-9}, minetest.get_modpath("nssb").."/schems/arena52.mts", "0", {}, true)
-			minetest.place_schematic({x=posarena.x, y=-30096, z=posarena.z-18}, minetest.get_modpath("nssb").."/schems/arena53.mts", "0", {}, true)
-			minetest.place_schematic({x=posarena.x, y=-30096, z=posarena.z-27}, minetest.get_modpath("nssb").."/schems/arena54.mts", "0", {}, true)
-			minetest.place_schematic({x=posarena.x, y=-30096, z=posarena.z-36}, minetest.get_modpath("nssb").."/schems/arena55.mts", "0", {}, true)
-			minetest.place_schematic({x=posarena.x, y=-30096, z=posarena.z-45}, minetest.get_modpath("nssb").."/schems/arena56.mts", "0", {}, true)
-			minetest.place_schematic({x=posarena.x, y=-30096, z=posarena.z-54}, minetest.get_modpath("nssb").."/schems/arena57.mts", "0", {}, true)
-			minetest.place_schematic({x=posarena.x, y=-30096, z=posarena.z-63}, minetest.get_modpath("nssb").."/schems/arena58.mts", "0", {}, true)
-			minetest.place_schematic({x=posarena.x, y=-30096, z=posarena.z-72}, minetest.get_modpath("nssb").."/schems/arena59.mts", "0", {}, true)
-			minetest.place_schematic({x=posarena.x, y=-30096, z=posarena.z-81}, minetest.get_modpath("nssb").."/schems/arena510.mts", "0", {}, true)
-			minetest.place_schematic({x=posarena.x, y=-30096, z=posarena.z-90}, minetest.get_modpath("nssb").."/schems/arena511.mts", "0", {}, true)
+			minetest.place_schematic({x=posarena.x, y= level - 96, z=posarena.z-9}, minetest.get_modpath("nssb").."/schems/arena52.mts", "0", {}, true)
+			minetest.place_schematic({x=posarena.x, y=- level - 96, z=posarena.z-18}, minetest.get_modpath("nssb").."/schems/arena53.mts", "0", {}, true)
+			minetest.place_schematic({x=posarena.x, y=- level - 96, z=posarena.z-27}, minetest.get_modpath("nssb").."/schems/arena54.mts", "0", {}, true)
+			minetest.place_schematic({x=posarena.x, y=- level - 96, z=posarena.z-36}, minetest.get_modpath("nssb").."/schems/arena55.mts", "0", {}, true)
+			minetest.place_schematic({x=posarena.x, y=- level - 96, z=posarena.z-45}, minetest.get_modpath("nssb").."/schems/arena56.mts", "0", {}, true)
+			minetest.place_schematic({x=posarena.x, y=- level - 96, z=posarena.z-54}, minetest.get_modpath("nssb").."/schems/arena57.mts", "0", {}, true)
+			minetest.place_schematic({x=posarena.x, y=- level - 96, z=posarena.z-63}, minetest.get_modpath("nssb").."/schems/arena58.mts", "0", {}, true)
+			minetest.place_schematic({x=posarena.x, y=- level - 96, z=posarena.z-72}, minetest.get_modpath("nssb").."/schems/arena59.mts", "0", {}, true)
+			minetest.place_schematic({x=posarena.x, y=- level - 96, z=posarena.z-81}, minetest.get_modpath("nssb").."/schems/arena510.mts", "0", {}, true)
+			minetest.place_schematic({x=posarena.x, y=- level - 96, z=posarena.z-90}, minetest.get_modpath("nssb").."/schems/arena511.mts", "0", {}, true)
 		end
 })
 
@@ -804,7 +807,7 @@ minetest.register_abm({
 	interval = 1.0,
 	chance = 1,
 	action = function(pos, node)
-			if pos.y < -30000 then
+			if pos.y < level then
 				minetest.remove_node(pos)
 			end
 	end
@@ -812,9 +815,9 @@ minetest.register_abm({
 --If the generated chunks of map are in Morlendor remove the lava_source nodes
 --[[
 minetest.register_on_generated(function(minp, maxp, seed)
-    if maxp.y > -30000 then
-        if minp.y < -3000 then
-            maxp.y = -30000
+    if maxp.y > level then
+        if minp.y < level then
+            maxp.y = level
         else
             return
         end
@@ -858,7 +861,7 @@ minetest.register_abm({
 	action =
 	function(pos, node)
 		local pos1 = {x=pos.x, y=pos.y+1, z=pos.z}
-		local n = minetest.env:get_node(pos1).name
+		local n = minetest.get_node(pos1).name
 		if n ~= "air" then
 			return
 		end
@@ -1022,7 +1025,7 @@ minetest.register_abm({
 
 					if not timer_pos or ((timer_pos) and ((os.time() - timer_pos.x) >= 30)) then
 
-						local name = minetest.env:get_node(pos1).name
+						local name = minetest.get_node(pos1).name
 
 						local target = minetest.string_to_pos(meta:get_string("player"..obj:get_player_name()))
 						if target then
