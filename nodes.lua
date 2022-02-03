@@ -242,7 +242,7 @@ minetest.register_node("nssb:web_cocoon", {
 			{items = {"default:sword_mese 1"}, rarity = 20},
 			{items = {"default:axe_bronze 1"}, rarity = 20},
 			{items = {"nssm:raw_scrausics_wing 2"}, rarity = 20},
-			{items = {"nssm:nssm:mantis_claw 1"}, rarity = 20},
+			{items = {"nssm:mantis_claw 1"}, rarity = 20},
 			{items = {"default:axe_mese 1"}, rarity = 20},
 			{items = {"nssm:mantis_sword 1"}, rarity = 20},
 			{items = {"default:axe_steel 1"}, rarity = 20},
