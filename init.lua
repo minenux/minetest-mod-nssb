@@ -1,4 +1,3 @@
-
 nssb = {}
 
 local path = minetest.get_modpath("nssb")

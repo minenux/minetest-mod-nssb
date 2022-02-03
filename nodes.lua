@@ -124,7 +124,7 @@ minetest.register_node("nssb:vine", {
 	paramtype2 = "wallmounted",
 	selection_box = {type = "wallmounted"},
 	legacy_wallmounted = true,
-	groups = {flammable=3, snappy = 3},
+	groups = {flammable = 3, snappy = 3},
 	sounds = default.node_sound_leaves_defaults()
 })
 
@@ -254,8 +254,7 @@ minetest.register_node("nssb:web_cocoon", {
 	groups = {snappy = 1, flammable = 2}
 })
 
-
---Eggs
+-- Eggs
 
 function nssb_register_eggs (
 		name, -- name of the mobs and the eggs
@@ -264,8 +263,8 @@ function nssb_register_eggs (
 		wide, -- the radius in wich mobs are generated
 		troppi, -- maximun number of mobs spawned
 		neigh, -- block that need to be near for spawning the mobs
-		night, --if only at night
-		lumin) --luminosity parameter of the egg_block
+		night, -- if only at night
+		lumin) -- luminosity parameter of the egg_block
 
 	minetest.register_node("nssb:" .. name .. "_eggs", {
 		description = descr .." Eggs",
@@ -274,7 +273,6 @@ function nssb_register_eggs (
 		is_ground_content = false,
 		groups = {choppy = 1}
 	})
-
 
 	minetest.register_abm({
 	nodenames = {"nssb:" .. name .. "_eggs"},
@@ -338,8 +336,8 @@ function nssb_register_eggboss (
 		wide, -- the radius in wich mobs are generated
 		troppi, -- maximun number of mobs spawned
 		neigh, -- block that need to be near for spawning the mobs
-		night, --if only at night
-		lumin) --luminosity parameter of the egg_block
+		night, -- if only at night
+		lumin) -- luminosity parameter of the egg_block
 
 	if lumin > 14 then lumin = 14 end
 
@@ -376,7 +374,7 @@ function nssb_register_eggboss (
 		local objects = minetest.get_objects_inside_radius(pos, 12)
 
 		for _,obj in ipairs(objects) do
-			count = count +1
+			count = count + 1
 		end
 
 		local t = minetest.get_timeofday()
@@ -392,6 +390,7 @@ function nssb_register_eggboss (
 end
 
 --Bosses of the eggs:
+
 nssb_register_eggboss ("phoenix", "Phoenix", 900, 10, 1, "air", false, 15)
 nssb_register_eggboss ("tarantula", "Tarantula", 900, 2, 1, "air", false, 5)
 nssb_register_eggboss ("night_master", "Night Master", 900, 10, 1, "air", true, 0)
@@ -426,8 +425,7 @@ minetest.register_abm({
 	end
 })
 
-
---Morlavala nodes
+-- Morlavala nodes
 
 minetest.register_node("nssb:morentir", {
 	description = "Dark Stone",
