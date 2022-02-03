@@ -1,33 +1,39 @@
 local moreores
+
 if minetest.get_modpath("moreores") then
-	moreores=true
+	moreores = true
 end
 
+
 nssb.mymapgenis = tonumber(minetest.setting_get('mymapgenis')) or 7
-if (nssb.mymapgenis~=6) and (nssb.mymapgenis~=7) then
+
+if (nssb.mymapgenis ~= 6) and (nssb.mymapgenis ~= 7) then
 	nssb.mymapgenis = 7
 end
 
+
 --schematichs generation
-local posplace = {x=0, y=-30093, z=0}
-local posmemory = {x=0, y=-30092, z=0}
-local postest = {x=5, y=-30091, z=6}
+
+local posplace = {x = 0, y = -30093, z = 0}
+local posmemory = {x = 0, y = -30092, z = 0}
+local postest = {x = 5, y = -30091, z = 6}
+
 function nssb_register_buildings(
-	build,			-- name of the schematic
-	rand,			-- 1/rand is the probability of the spawning of the schematic if the place found is acceptable
-	posschem,		-- the block on which the schematic need to be to spawn
-	down,			-- useful in finding flat surfaces, down indetify the x and z coordinates of a block 1 under posschem
-	downblock,		-- the block that is necessary to find in down to place the schematic
-	above,			-- when you need to place the schem under something (water, air, jungleleaves...) above is the number of blocks above posschem
-	aboveblock,		-- the name of this block above above-times posschem
-	radius,			-- the radius in which the function search for the "near" block
-	near,			-- the block that is necessary to spawn the schem in the radius
-	side,			-- the mesure of the side of the schematic, it is necessary to put the dirt under it
-	underground,	-- if true the schematic need to spawn underground
-	height,			-- under this heigh the schematic can spawn. If nil the schematic can spawn everywhere underground
-	ice,			-- if true fill the space under the schem with ice and not with dirt as standard
-	exact_height, 	-- exact_height=exact_eight under the surface in the correct place
-	portal)			-- is this schematic a portal for the morlendor?
+	build, -- name of the schematic
+	rand, -- 1/rand is the probability of the spawning of the schematic if the place found is acceptable
+	posschem, -- the block on which the schematic need to be to spawn
+	down, -- useful in finding flat surfaces, down indetify the x and z coordinates of a block 1 under posschem
+	downblock, -- the block that is necessary to find in down to place the schematic
+	above, -- when you need to place the schem under something (water, air, jungleleaves...) above is the number of blocks above posschem
+	aboveblock, -- the name of this block above above-times posschem
+	radius, -- the radius in which the function search for the "near" block
+	near, -- the block that is necessary to spawn the schem in the radius
+	side, -- the mesure of the side of the schematic, it is necessary to put the dirt under it
+	underground, -- if true the schematic need to spawn underground
+	height, -- under this heigh the schematic can spawn. If nil the schematic can spawn everywhere underground
+	ice, -- if true fill the space under the schem with ice and not with dirt as standard
+	exact_height, -- exact_height=exact_eight under the surface in the correct place
+	portal) -- is this schematic a portal for the morlendor?
 
 	minetest.register_on_generated(function(minp, maxp, seed)
 		if underground==false then
@@ -960,10 +966,10 @@ minetest.register_abm({
 					--the timer is saved inside a position because for me the tonumber function doesn't work
 					local timer_pos = minetest.string_to_pos(meta:get_string("player_timer"..obj:get_player_name()))
 					if not timer_pos or ((timer_pos) and ((os.time() - timer_pos.x) >= 30)) then
-						local posp = obj:getpos()
+						local posp = obj:get_pos()
 						--minetest.chat_send_all("Posizione: "..minetest.pos_to_string(posp))
 
-						obj:setpos({x=5, y=pos1.y+2, z =5})
+						obj:set_pos({x=5, y=pos1.y+2, z =5})
 						meta:set_string("player"..obj:get_player_name(), minetest.pos_to_string(posp))
 						timer_pos = {x=os.time(), y = 0, z = 0}
 						meta:set_string("player_timer"..obj:get_player_name(), minetest.pos_to_string(timer_pos))
@@ -1020,7 +1026,7 @@ minetest.register_abm({
 
 						local target = minetest.string_to_pos(meta:get_string("player"..obj:get_player_name()))
 						if target then
-							obj:setpos({x = target.x, y=target.y+1, z=target.z})
+							obj:set_pos({x = target.x, y=target.y+1, z=target.z})
 							timer_pos = {x=os.time(), y = 0, z = 0}
 							meta:set_string("player_timer"..obj:get_player_name(), minetest.pos_to_string(timer_pos))
 						end
