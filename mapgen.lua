@@ -362,10 +362,11 @@ nssb_register_buildings ("blocobiggesthouse", 4, "default:stone", 0, "air",  0, 
 -- This dimension is "divided" in in 7 layer.
 -- 1st layer is indistructible, made of indistructible morentir
 
-for i = 1, 9 do
+-- for i = 1, 9 do
 
 	minetest.register_ore({
-		ore_type       = "scatter",
+		--ore_type       = "scatter",
+		ore_type       = "stratum",
 		ore            = "nssb:indistructible_morentir",
 		wherein        = {
 			"default:water_source","default:water_flowing","default:gravel",
@@ -378,7 +379,8 @@ for i = 1, 9 do
 			"default:desert_stone", "default:desert_cobble", "default:desert_stonebrick",
 			"default:sandstone", "default:sandstonebrick", "default:stone_with_tin",
 			-- moreores (can be added to list, only removes if mod active)
-			"moreores:mineral_tin", "moreores:mineral_silver", "moreores:mineral_mithril"
+			"moreores:mineral_tin", "moreores:mineral_silver", "moreores:mineral_mithril",
+			"default:silver_sand"
 		},
 		clust_scarcity = 1,
 		clust_num_ores = 1,
@@ -386,7 +388,7 @@ for i = 1, 9 do
 		y_min          = level - 44,
 		y_max          = level - 37
 	})
-end
+-- end
 
 --[[
 if moreores then
@@ -414,10 +416,11 @@ end
 
 local function replace2(old, new)
 
-	for i = 1, 9 do
+--	for i = 1, 9 do
 
 		minetest.register_ore({
-			ore_type       = "scatter",
+			-- ore_type       = "scatter",
+			ore_type       = "stratum",
 			ore            = new,
 			wherein        = old,
 			clust_scarcity = 1,
@@ -426,12 +429,12 @@ local function replace2(old, new)
 			y_min          = level - 65,
 			y_max          = level - 45
 		})
-	end
+--	end
 end
 
 -- optimized list
 replace2({"default:stone", "default:stone_with_coal", "default:stone_with_iron",
-		"default:stone_with_mese", "default:stone_with_diamond",
+		"default:stone_with_mese", "default:stone_with_diamond", "default:silver_sand",
 		"default:stone_with_gold", "default:stone_with_copper", "default:gravel",
 		"default:dirt", "default:sand", "default:water_source", "default:water_flowing",
 		"default:lava_source", "default:lava_flowing", "default:mese_block",
@@ -505,10 +508,11 @@ end
 
 -- 3rd layer is made by air
 
-for i = 1, 32 do
+--for i = 1, 32 do
 
 	minetest.register_ore({
-		ore_type       = "scatter",
+		--ore_type       = "scatter",
+		ore_type       = "stratum",
 		ore            = "air",
 		wherein        = {
 			"nssb:ant_dirt", "default:stone", "default:cobble", "default:stonebrick",
@@ -517,7 +521,7 @@ for i = 1, 32 do
 			"default:water_source", "default:water_flowing", "default:gravel",
 			"default:dirt", "default:sand", "default:lava_source", "default:lava_flowing",
 			"default:mese_block",  "default:stone", "air", "default:stone_with_coal",
-			"default:stone_with_iron", "default:stone_with_mese",
+			"default:stone_with_iron", "default:stone_with_mese", "default:silver_sand",
 			"default:stone_with_diamond", "default:stone_with_gold",
 			"default:stone_with_copper", "default:stone_with_tin",
 			-- moreores (can be added to list, only removes if mod active)
@@ -529,7 +533,7 @@ for i = 1, 32 do
 		y_min          = level - 93,
 		y_max          = level - 66
 	})
-end
+--end
 
 --[[
 if moreores then
@@ -690,10 +694,11 @@ minetest.register_ore({
 
 local function replace4(old, new)
 
-	for i = 1, 9 do
+--	for i = 1, 9 do
 
 		minetest.register_ore({
-			ore_type       = "scatter",
+			--ore_type       = "scatter",
+			ore_type       = "stratum",
 			ore            = new,
 			wherein        = old,
 			clust_scarcity = 1,
@@ -702,7 +707,7 @@ local function replace4(old, new)
 			y_min          = level - 107,
 			y_max          = level - 94
 		})
-	end
+--	end
 end
 
 -- optimized list
@@ -714,7 +719,8 @@ replace4({"default:lava_flowing", "default:water_flowing"}, "nssb:moenen_flowing
 replace4({"default:gravel", "default:dirt", "default:sand", "nssb:ant_dirt",
 		"default:stone", "default:cobble", "default:stonebrick", "default:mossycobble",
 		"default:desert_stone", "default:desert_cobble", "default:desert_stonebrick",
-		"default:sandstone", "default:sandstonebrick"}, "nssb:morkemen")
+		"default:sandstone", "default:sandstonebrick", "default:silver_sand"},
+		"nssb:morkemen")
 replace4({"default:stone", "default:stone_with_tin", "moreores:mineral_tin",
 		"moreores:mineral_silver", "moreores:mineral_mithril"}, "nssb:morentir")
 replace4("default:mese_block", "nssb:life_energy_ore")
@@ -784,10 +790,11 @@ minetest.register_ore({
 
 local function replace5(old, new)
 
-	for i = 1, 9 do
+--	for i = 1, 9 do
 
 		minetest.register_ore({
-			ore_type       = "scatter",
+			-- ore_type       = "scatter",
+			ore_type       = "stratum",
 			ore            = new,
 			wherein        = old,
 			clust_scarcity = 1,
@@ -796,7 +803,7 @@ local function replace5(old, new)
 			y_min          = level - 156,
 			y_max          = level - 108
 		})
-	end
+--	end
 end
 
 minetest.register_ore({
@@ -832,7 +839,8 @@ replace5("moreores:mineral_mithril", "nssb:moranga")
 replace5({"default:gravel", "default:dirt", "default:sand", "nssb:ant_dirt",
 		"default:stone", "default:cobble", "default:stonebrick", "default:mossycobble",
 		"default:desert_stone", "default:desert_cobble", "default:desert_stonebrick",
-		"default:sandstone", "default:sandstonebrick"}, "nssb:morkemen")
+		"default:sandstone", "default:sandstonebrick", "default:silver_sand"},
+		"nssb:morkemen")
 
 --[[
 replace5("default:stone", "nssb:morentir")
@@ -866,10 +874,11 @@ end
 
 local function replace6(old, new)
 
-	for i = 1, 9 do
+--	for i = 1, 9 do
 
 		minetest.register_ore({
-			ore_type       = "scatter",
+			-- ore_type       = "scatter",
+			ore_type       = "stratum",
 			ore            = new,
 			wherein        = old,
 			clust_scarcity = 1,
@@ -878,7 +887,7 @@ local function replace6(old, new)
 			y_min          = level - 205,
 			y_max          = level - 157
 		})
-	end
+--	end
 end
 
 -- optimized list
@@ -893,7 +902,8 @@ replace6({"default:stone_with_iron", "default:stone_with_mese",
 replace6({"default:gravel", "default:dirt", "default:sand", "nssb:ant_dirt",
 		"default:stone", "default:cobble", "default:stonebrick", "default:mossycobble",
 		"default:desert_stone", "default:desert_cobble", "default:desert_stonebrick",
-		"default:sandstone", "default:sandstonebrick"}, "nssb:morkemen")
+		"default:sandstone", "default:sandstonebrick", "default:silver_sand"},
+		"nssb:morkemen")
 replace6("default:water_source", "nssb:mornen")
 replace6("default:water_flowing", "nssb:mornen_flowing")
 
@@ -938,10 +948,11 @@ minetest.register_ore({
 
 -- 7th layer is indistructible
 
-for i = 1, 9 do
+-- for i = 1, 9 do
 
 	minetest.register_ore({
-		ore_type       = "scatter",
+		-- ore_type       = "scatter",
+		ore_type       = "stratum",
 		ore            = "nssb:indistructible_morentir",
 		wherein        = {
 			"nssb:ant_dirt", "default:stone", "default:cobble", "default:stonebrick",
@@ -950,9 +961,10 @@ for i = 1, 9 do
 			"default:water_source", "default:water_flowing", "default:gravel",
 			"default:dirt", "default:sand", "default:lava_source", "default:lava_flowing",
 			"default:mese_block", "default:stone", "air", "default:stone_with_coal",
-			"default:stone_with_iron", "default:stone_with_mese",
+			"default:stone_with_iron", "default:stone_with_mese", "default:silver_sand",
 			"default:stone_with_diamond", "default:stone_with_gold",
-			"default:stone_with_copper"
+			"default:stone_with_copper", "default:stone_with_tin",
+			"moreores:mineral_tin", "moreores:mineral_silver", "moreores:mineral_mithril"
 		},
 		clust_scarcity = 1,
 		clust_num_ores = 1,
@@ -960,8 +972,9 @@ for i = 1, 9 do
 		y_min          = level - 213,
 		y_max          = level - 206
 	})
-end
+-- end
 
+--[[
 if moreores then
 
 	for i = 1, 9 do
@@ -981,11 +994,13 @@ if moreores then
 		})
 	end
 end
+]]
 
-for i = 1, 12 do
+-- for i = 1, 12 do
 
 	minetest.register_ore({
-		ore_type       = "scatter",
+		-- ore_type       = "scatter",
+		ore_type       = "stratum",
 		ore            = "air",
 		wherein        = {
 			"default:water_source", "default:water_flowing", "default:lava_source",
@@ -997,7 +1012,7 @@ for i = 1, 12 do
 		y_min          = level - 207,
 		y_max          = level - 45
 	})
-end
+-- end
 
 -- Place the buildings in the morlendor
 
