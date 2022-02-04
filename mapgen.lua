@@ -1,20 +1,15 @@
-local moreores
-
-if minetest.get_modpath("moreores") then
-	moreores = true
-end
-
+local moreores = minetest.get_modpath("moreores")
 
 nssb.mymapgenis = tonumber(minetest.settings:get("mymapgenis")) or 7
 
-if (nssb.mymapgenis ~= 6) and (nssb.mymapgenis ~= 7) then
+if nssb.mymapgenis ~= 6 and nssb.mymapgenis ~= 7 then
 	nssb.mymapgenis = 7
 end
 
 -- get gneration level from settings
 local level = tonumber(minetest.settings:get("nssb.morlendor_level")) or -30000
 
--- schematichs generation
+-- schematics generation
 
 local posplace = {x = 0, y = level - 93, z = 0}
 local posmemory = {x = 0, y = level - 92, z = 0}
@@ -39,29 +34,29 @@ function nssb_register_buildings(
 
 	minetest.register_on_generated(function(minp, maxp, seed)
 
-		if underground==false then
+		if underground == false then
 
 			local i, j, k
-			local flag=0
+			local flag = 0
 			local posd
 
 			i = math.random(minp.x, maxp.x)
 			k = math.random(minp.z, maxp.z)
 
-			for j=minp.y,maxp.y do
+			for j = minp.y, maxp.y do
 
-				local pos1 = {x=i, y=j, z=k}
-				local pos2 = {x=i+down, y=j-1, z=k+down}
-				local pos3 = {x=i, y=j+above, z=k}
+				local pos1 = {x = i, y = j, z = k}
+				local pos2 = {x = i + down, y = j - 1, z = k + down}
+				local pos3 = {x = i, y = j + above, z = k}
 				local n = minetest.get_node(pos1).name
 				local u = minetest.get_node(pos2).name
 				local d = minetest.get_node(pos3).name
 
-				if (downblock==nil) then
+				if downblock == nil then
 					u = downblock
 				end
 
-				if (aboveblock==nil) then
+				if aboveblock == nil then
 					d = aboveblock
 				end
 
@@ -71,7 +66,7 @@ function nssb_register_buildings(
 					if minetest.find_node_near(pos3, radius, near) then
 
 							minetest.place_schematic(pos1, minetest.get_modpath("nssb")
-									.. "/schems/".. build ..".mts", "0", {}, true)
+									.. "/schems/" .. build .. ".mts", "0", {}, true)
 
 -- minetest.chat_send_all("Added schematic in "..(minetest.pos_to_string(pos1)))
 
@@ -96,16 +91,18 @@ function nssb_register_buildings(
 
 							while fg == "air" do
 
-								minetest.set_node(f, {name = "default:dirt"})
+								--minetest.set_node(f, {name = "default:dirt"})
+								minetest.swap_node(f, {name = "default:dirt"})
 
-								f.y=f.y-1
+								f.y = f.y - 1
 
 								fg = minetest.get_node(f).name
 							end
 						else
-							while fg=="air" do
+							while fg == "air" do
 
-								minetest.set_node(f, {name = "default:ice"})
+								--minetest.set_node(f, {name = "default:ice"})
+								minetest.swap_node(f, {name = "default:ice"})
 
 								f.y = f.y - 1
 
@@ -117,36 +114,68 @@ function nssb_register_buildings(
 			end
 
 			if portal == true then
-				--[[
+
+--[[
 				-- this is a portal for the morlendor
 				if already_spawned == 0 then
+
 					--already_spawned = 1
+
 					local name = minetest.get_node(posplace).name
+
 					minetest.chat_send_all("Non ancora creato. Nome: "..name)
+
 					if name == "ignore" then
-						local pmin, pmax = minetest.get_voxel_manip():read_from_map(vector.subtract(posplace, 80), vector.add(posplace, 80))
+
+						local pmin, pmax = minetest.get_voxel_manip():read_from_map(
+								vector.subtract(posplace, 80), vector.add(posplace, 80))
+
 						name = minetest.get_node(posplace).name
+
 						minetest.chat_send_all("name dopo read_from_map:.."..name)
+
 						if name == "ignore" then
-							minetest.emerge_area(vector.subtract(posplace, 80), vector.add(posplace, 80))
+
+							minetest.emerge_area(vector.subtract(posplace, 80),
+									vector.add(posplace, 80))
+
 							name = minetest.get_node(posplace).name
+
 							minetest.chat_send_all("name dopo emerge_area:.."..name)
 						end
+
 						minetest.after(25, function(posplace)
+
 							name = minetest.get_node(posplace).name
+
 							minetest.chat_send_all("name prima di place_schematic:.."..name)
-							minetest.place_schematic(posplace, minetest.get_modpath("nssb").."/schems/memoportal.mts", "0", {}, true)
-							--minetest.place_schematic(posplace, minetest.get_modpath("nssb").."/schems/memoportal.mts", "0", {}, true)
+
+							minetest.place_schematic(posplace,
+									minetest.get_modpath("nssb")
+									.. "/schems/memoportal.mts", "0", {}, true)
+
+							-- minetest.place_schematic(posplace,
+									minetest.get_modpath("nssb")
+									.. "/schems/memoportal.mts", "0", {}, true)
+
 							--minetest.chat_send_all("3")
+
 							name = minetest.get_node(posplace).name
+
 							minetest.chat_send_all("name dopo place_schematic:.."..name)
+
 						end, posplace)
 					end
-					minetest.place_schematic(posplace, minetest.get_modpath("nssb").."/schems/memoportal.mts", "0", {}, true)
+
+					minetest.place_schematic(posplace, minetest.get_modpath("nssb")
+							.. "/schems/memoportal.mts", "0", {}, true)
 				end
-				]]--
+
+]]--
 			end
-		else	--underground==true
+
+		else	--underground == true
+
 			if minp.y < 0 then
 
 -- minetest.chat_send_all("Posmin: " .. (minetest.pos_to_string(minp)).." Posmax: " .. (minetest.pos_to_string(maxp)))
@@ -347,7 +376,9 @@ for i = 1, 9 do
 			"default:stone_with_copper", "nssb:ant_dirt",  "default:stone",
 			"default:cobble", "default:stonebrick", "default:mossycobble",
 			"default:desert_stone", "default:desert_cobble", "default:desert_stonebrick",
-			"default:sandstone", "default:sandstonebrick"
+			"default:sandstone", "default:sandstonebrick", "default:stone_with_tin",
+			-- moreores (can be added to list, only removes if mod active)
+			"moreores:mineral_tin", "moreores:mineral_silver", "moreores:mineral_mithril"
 		},
 		clust_scarcity = 1,
 		clust_num_ores = 1,
@@ -357,6 +388,7 @@ for i = 1, 9 do
 	})
 end
 
+--[[
 if moreores then
 
 	for i = 1, 9 do
@@ -376,6 +408,7 @@ if moreores then
 		})
 	end
 end
+]]
 
 -- 2nd layer is "stalagmitic", have bats and morelentir
 
@@ -396,7 +429,20 @@ local function replace2(old, new)
 	end
 end
 
+-- optimized list
+replace2({"default:stone", "default:stone_with_coal", "default:stone_with_iron",
+		"default:stone_with_mese", "default:stone_with_diamond",
+		"default:stone_with_gold", "default:stone_with_copper", "default:gravel",
+		"default:dirt", "default:sand", "default:water_source", "default:water_flowing",
+		"default:lava_source", "default:lava_flowing", "default:mese_block",
+		"nssb:ant_dirt", "default:stone", "default:cobble", "default:stonebrick",
+		"default:mossycobble", "default:desert_stone", "default:desert_cobble",
+		"default:desert_stonebrick", "default:sandstone", "default:sandstonebrick"},
+		"nssb:morelentir")
+replace2({"default:stone_with_tin", "moreores:mineral_tin", "moreores:mineral_silver",
+		"moreores:mineral_mithril"}, "air")
 
+--[[
 replace2("default:stone", "nssb:morentir")
 replace2("default:stone_with_coal", "nssb:morelentir")
 replace2("default:stone_with_iron", "nssb:morelentir")
@@ -420,8 +466,9 @@ replace2({"nssb:ant_dirt", "default:stone", "default:cobble", "default:stonebric
 if moreores then
 
 	replace2({"moreores:mineral_tin", "moreores:mineral_silver",
-			"moreores:mineral_mithril"},"air")
+			"moreores:mineral_mithril"}, "air")
 end
+]]
 
 minetest.register_ore({
 	ore_type        = "blob",
@@ -472,7 +519,9 @@ for i = 1, 32 do
 			"default:mese_block",  "default:stone", "air", "default:stone_with_coal",
 			"default:stone_with_iron", "default:stone_with_mese",
 			"default:stone_with_diamond", "default:stone_with_gold",
-			"default:stone_with_copper"
+			"default:stone_with_copper", "default:stone_with_tin",
+			-- moreores (can be added to list, only removes if mod active)
+			"moreores:mineral_tin", "moreores:mineral_silver", "moreores:mineral_mithril"
 		},
 		clust_scarcity = 1,
 		clust_num_ores = 1,
@@ -482,6 +531,7 @@ for i = 1, 32 do
 	})
 end
 
+--[[
 if moreores then
 
 	for i = 1, 9 do
@@ -501,6 +551,7 @@ if moreores then
 		})
 	end
 end
+]]
 
 minetest.register_ore({
 	ore_type        = "blob",
@@ -654,7 +705,21 @@ local function replace4(old, new)
 	end
 end
 
+-- optimized list
+replace4({"default:stone_with_iron", "default:stone_with_mese", "default:stone_with_gold",
+		"default:stone_with_diamond", "default:stone_with_copper"}, "air")
+replace4({"default:stone_with_coal", "default:lava_source", "default:water_source"},
+		"nssb:mornen")
+replace4({"default:lava_flowing", "default:water_flowing"}, "nssb:moenen_flowing")
+replace4({"default:gravel", "default:dirt", "default:sand", "nssb:ant_dirt",
+		"default:stone", "default:cobble", "default:stonebrick", "default:mossycobble",
+		"default:desert_stone", "default:desert_cobble", "default:desert_stonebrick",
+		"default:sandstone", "default:sandstonebrick"}, "nssb:morkemen")
+replace4({"default:stone", "default:stone_with_tin", "moreores:mineral_tin",
+		"moreores:mineral_silver", "moreores:mineral_mithril"}, "nssb:morentir")
+replace4("default:mese_block", "nssb:life_energy_ore")
 
+--[[
 replace4("default:stone", "nssb:morentir")
 replace4("default:stone_with_coal", "nssb:mornen")
 replace4("default:stone_with_iron", "air")
@@ -680,12 +745,13 @@ if moreores then
 	replace4({"moreores:mineral_tin", "moreores:mineral_silver",
 			"moreores:mineral_mithril"},"nssb:morentir")
 end
+]]
 
 minetest.register_ore({
 	ore_type       = "scatter",
 	ore            = "nssb:morlote",
 	wherein        = "air",
-	clust_scarcity = 7*7*7,
+	clust_scarcity = 7 * 7 * 7,
 	clust_num_ores = 1,
 	clust_size     = 1,
 	y_min          = level - 94,
@@ -696,7 +762,7 @@ minetest.register_ore({
 	ore_type       = "scatter",
 	ore            = "nssb:mornar",
 	wherein        = "air",
-	clust_scarcity = 4*4*4,
+	clust_scarcity = 4 * 4 * 4,
 	clust_num_ores = 1,
 	clust_size     = 1,
 	y_min          = level - 94,
@@ -707,7 +773,7 @@ minetest.register_ore({
 	ore_type       = "scatter",
 	ore            = "nssm:morwa_statue",
 	wherein        = "air",
-	clust_scarcity = 18*18*18,
+	clust_scarcity = 18 * 18 * 18,
 	clust_num_ores = 1,
 	clust_size     = 1,
 	y_min          = level - 94,
@@ -752,7 +818,23 @@ minetest.register_ore({
 	}
 })
 
+-- optimized list
+replace5({"default:stone", "default:stone_with_iron", "default:stone_with_mese",
+		"default:stone_with_copper"}, "nssb:morentir")
+replace5({"default:stone_with_coal", "default:stone_with_diamond",
+		"default:stone_with_gold", "default:mese_block", "default:stone_with_tin",
+		"moreores:mineral_tin"}, "nssb:life_energy_ore")
+replace5({"default:lava_source", "default:lava_flowing", "moreores:mineral_silver"},
+		"nssb:morentir")
+replace5("default:water_source", "nssb:mornen")
+replace5("default:water_flowing", "nssb:mornen_flowing")
+replace5("moreores:mineral_mithril", "nssb:moranga")
+replace5({"default:gravel", "default:dirt", "default:sand", "nssb:ant_dirt",
+		"default:stone", "default:cobble", "default:stonebrick", "default:mossycobble",
+		"default:desert_stone", "default:desert_cobble", "default:desert_stonebrick",
+		"default:sandstone", "default:sandstonebrick"}, "nssb:morkemen")
 
+--[[
 replace5("default:stone", "nssb:morentir")
 replace5("default:stone_with_coal", "nssb:life_energy_ore")
 replace5("default:stone_with_iron", "nssb:morentir")
@@ -774,10 +856,11 @@ replace5({"nssb:ant_dirt", "default:stone", "default:cobble", "default:stonebric
 		"nssb:morkemen")
 
 if moreores then
-	replace5("moreores:mineral_tin","nssb:life_energy_ore")
-	replace5("moreores:mineral_silver","nssb:morentir")
-	replace5("moreores:mineral_mithril","nssb:moranga")
+	replace5("moreores:mineral_tin", "nssb:life_energy_ore")
+	replace5("moreores:mineral_silver", "nssb:morentir")
+	replace5("moreores:mineral_mithril", "nssb:moranga")
 end
+]]
 
 -- 6th layer is underground with other caves and the special metal
 
@@ -798,7 +881,23 @@ local function replace6(old, new)
 	end
 end
 
+-- optimized list
+replace6({"default:stone", "default:lava_source", "default:lava_flowing"},
+		"nssb:morentir")
+replace6({"default:stone_with_coal", "default:stone_with_diamond",
+		"default:stone_with_gold", "default:mese_block", "default:stone_with_tin",
+		"moreores:mineral_tin"}, "nssb:life_energy_ore")
+replace6({"default:stone_with_iron", "default:stone_with_mese",
+		"default:stone_with_copper", "moreores:mineral_silver",
+		"moreores:mineral_mithril"}, "nssb:moranga")
+replace6({"default:gravel", "default:dirt", "default:sand", "nssb:ant_dirt",
+		"default:stone", "default:cobble", "default:stonebrick", "default:mossycobble",
+		"default:desert_stone", "default:desert_cobble", "default:desert_stonebrick",
+		"default:sandstone", "default:sandstonebrick"}, "nssb:morkemen")
+replace6("default:water_source", "nssb:mornen")
+replace6("default:water_flowing", "nssb:mornen_flowing")
 
+--[[
 replace6("default:stone", "nssb:morentir")
 replace6("default:stone_with_coal", "nssb:life_energy_ore")
 replace6("default:stone_with_iron", "nssb:moranga")
@@ -820,16 +919,17 @@ replace6({"nssb:ant_dirt", "default:stone", "default:cobble", "default:stonebric
 		"nssb:morkemen")
 
 if moreores then
-	replace6("moreores:mineral_tin","nssb:life_energy_ore")
-	replace6("moreores:mineral_silver","nssb:moranga")
-	replace6("moreores:mineral_mithril","nssb:moranga")
+	replace6("moreores:mineral_tin", "nssb:life_energy_ore")
+	replace6("moreores:mineral_silver", "nssb:moranga")
+	replace6("moreores:mineral_mithril", "nssb:moranga")
 end
+]]
 
 minetest.register_ore({
 	ore_type       = "scatter",
 	ore            = "nssb:boum_morentir",
 	wherein        = "nssb:morentir",
-	clust_scarcity = 13*13*13,
+	clust_scarcity = 13 * 13 * 13,
 	clust_num_ores = 1,
 	clust_size     = 1,
 	y_min          = level - 205,
@@ -1125,7 +1225,7 @@ minetest.register_abm({
 	chance = 100,
 	action = function(pos, node)
 
-		local pos1 = {x=pos.x, y=pos.y+1, z=pos.z}
+		local pos1 = {x = pos.x, y = pos.y + 1, z = pos.z}
 		local n = minetest.get_node(pos1).name
 
 		if n ~= "air" then
@@ -1192,7 +1292,7 @@ minetest.register_abm({
 			maxsize = 0.7,
 			collisiondetection = false,
 			vertical = true,
-			texture = "morparticle.png",
+			texture = "morparticle.png"
 		})
 	end
 })
@@ -1219,7 +1319,7 @@ minetest.register_abm({
 			maxsize = 1.4,
 			collisiondetection = false,
 			vertical = true,
-			texture = "morparticle.png",
+			texture = "morparticle.png"
 		})
 	end
 })
@@ -1284,7 +1384,7 @@ minetest.register_abm({
 			maxsize = 1.4,
 			collisiondetection = false,
 			vertical = true,
-			texture = "earth_particle.png",
+			texture = "earth_particle.png"
 		})
 	end
 })
