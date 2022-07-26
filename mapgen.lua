@@ -1,7 +1,7 @@
 local moreores = minetest.get_modpath("moreores")
+local is_50 = nssb.is_50
 
 nssb.mymapgenis = tonumber(minetest.settings:get("mymapgenis")) or 7
-
 if nssb.mymapgenis ~= 6 and nssb.mymapgenis ~= 7 then
 	nssb.mymapgenis = 7
 end
@@ -14,6 +14,14 @@ local level = tonumber(minetest.settings:get("nssb.morlendor_level")) or -30000
 local posplace = {x = 0, y = level - 93, z = 0}
 local posmemory = {x = 0, y = level - 92, z = 0}
 local postest = {x = 5, y = level - 91, z = 6}
+
+-- ore type generation
+local oretype_morlan_layer
+	if is_50 then
+		oretype_morlan_layer       = "stratum"
+	else
+		oretype_morlan_layer       = "scatter"
+	end
 
 function nssb_register_buildings(
 	build, -- name of the schematic
@@ -362,11 +370,9 @@ nssb_register_buildings ("blocobiggesthouse", 4, "default:stone", 0, "air",  0, 
 -- This dimension is "divided" in in 7 layer.
 -- 1st layer is indistructible, made of indistructible morentir
 
--- for i = 1, 9 do
-
+for i = 1, 9 do
 	minetest.register_ore({
-		--ore_type       = "scatter",
-		ore_type       = "stratum",
+		ore_type       = oretype_morlan_layer,
 		ore            = "nssb:indistructible_morentir",
 		wherein        = {
 			"default:water_source","default:water_flowing","default:gravel",
@@ -388,15 +394,15 @@ nssb_register_buildings ("blocobiggesthouse", 4, "default:stone", 0, "air",  0, 
 		y_min          = level - 44,
 		y_max          = level - 37
 	})
--- end
+	if is_50 then break end
+end
 
 --[[
 if moreores then
 
 	for i = 1, 9 do
-
 		minetest.register_ore({
-			ore_type       = "scatter",
+			ore_type       = oretype_morlan_layer,
 			ore            = "nssb:indistructible_morentir",
 			wherein        = {
 				"moreores:mineral_tin", "moreores:mineral_silver",
@@ -409,18 +415,16 @@ if moreores then
 			y_max          = level - 37
 		})
 	end
+	if is_50 then break end
 end
 ]]
 
 -- 2nd layer is "stalagmitic", have bats and morelentir
 
 local function replace2(old, new)
-
---	for i = 1, 9 do
-
+	for i = 1, 9 do
 		minetest.register_ore({
-			-- ore_type       = "scatter",
-			ore_type       = "stratum",
+			ore_type       = oretype_morlan_layer,
 			ore            = new,
 			wherein        = old,
 			clust_scarcity = 1,
@@ -429,7 +433,8 @@ local function replace2(old, new)
 			y_min          = level - 65,
 			y_max          = level - 45
 		})
---	end
+		if is_50 then break end
+	end
 end
 
 -- optimized list
@@ -493,7 +498,6 @@ minetest.register_ore({
 })
 
 for i = 1, 3 do
-
 	minetest.register_ore({
 		ore_type       = "scatter",
 		ore            = "air",
@@ -504,15 +508,14 @@ for i = 1, 3 do
 		y_min          = level - 66,
 		y_max          = level - 58
 	})
+	if is_50 then break end
 end
 
 -- 3rd layer is made by air
 
---for i = 1, 32 do
-
+for i = 1, 32 do
 	minetest.register_ore({
-		--ore_type       = "scatter",
-		ore_type       = "stratum",
+		ore_type       = oretype_morlan_layer,
 		ore            = "air",
 		wherein        = {
 			"nssb:ant_dirt", "default:stone", "default:cobble", "default:stonebrick",
@@ -533,15 +536,15 @@ end
 		y_min          = level - 93,
 		y_max          = level - 66
 	})
---end
+	if is_50 then break end
+end
 
 --[[
 if moreores then
 
 	for i = 1, 9 do
-
 		minetest.register_ore({
-			ore_type       = "scatter",
+			ore_type       = oretype_morlan_layer,
 			ore            = "air",
 			wherein        = {
 				"moreores:mineral_tin", "moreores:mineral_silver",
@@ -553,6 +556,7 @@ if moreores then
 			y_min          = level - 93,
 			y_max          = level - 66
 		})
+		if is_50 then break end
 	end
 end
 ]]
@@ -694,11 +698,9 @@ minetest.register_ore({
 
 local function replace4(old, new)
 
---	for i = 1, 9 do
-
+	for i = 1, 9 do
 		minetest.register_ore({
-			--ore_type       = "scatter",
-			ore_type       = "stratum",
+			ore_type       = oretype_morlan_layer,
 			ore            = new,
 			wherein        = old,
 			clust_scarcity = 1,
@@ -707,7 +709,8 @@ local function replace4(old, new)
 			y_min          = level - 107,
 			y_max          = level - 94
 		})
---	end
+		if is_50 then break end
+	end
 end
 
 -- optimized list
@@ -790,11 +793,9 @@ minetest.register_ore({
 
 local function replace5(old, new)
 
---	for i = 1, 9 do
-
+	for i = 1, 9 do
 		minetest.register_ore({
-			-- ore_type       = "scatter",
-			ore_type       = "stratum",
+			ore_type       = oretype_morlan_layer,
 			ore            = new,
 			wherein        = old,
 			clust_scarcity = 1,
@@ -803,7 +804,8 @@ local function replace5(old, new)
 			y_min          = level - 156,
 			y_max          = level - 108
 		})
---	end
+		if is_50 then break end
+	end
 end
 
 minetest.register_ore({
@@ -874,11 +876,10 @@ end
 
 local function replace6(old, new)
 
---	for i = 1, 9 do
+	for i = 1, 9 do
 
 		minetest.register_ore({
-			-- ore_type       = "scatter",
-			ore_type       = "stratum",
+			ore_type       = oretype_morlan_layer,
 			ore            = new,
 			wherein        = old,
 			clust_scarcity = 1,
@@ -887,7 +888,8 @@ local function replace6(old, new)
 			y_min          = level - 205,
 			y_max          = level - 157
 		})
---	end
+		if is_50 then break end
+	end
 end
 
 -- optimized list
@@ -948,11 +950,10 @@ minetest.register_ore({
 
 -- 7th layer is indistructible
 
--- for i = 1, 9 do
+for i = 1, 9 do
 
 	minetest.register_ore({
-		-- ore_type       = "scatter",
-		ore_type       = "stratum",
+		ore_type       = oretype_morlan_layer,
 		ore            = "nssb:indistructible_morentir",
 		wherein        = {
 			"nssb:ant_dirt", "default:stone", "default:cobble", "default:stonebrick",
@@ -972,7 +973,8 @@ minetest.register_ore({
 		y_min          = level - 213,
 		y_max          = level - 206
 	})
--- end
+	if is_50 then break end
+end
 
 --[[
 if moreores then
@@ -980,7 +982,7 @@ if moreores then
 	for i = 1, 9 do
 
 		minetest.register_ore({
-			ore_type       = "scatter",
+			ore_type       = oretype_morlan_layer,
 			ore            = "nssb:indistructible_morentir",
 			wherein        = {
 				"moreores:mineral_tin", "moreores:mineral_silver",
@@ -992,15 +994,15 @@ if moreores then
 			y_min          = level - 213,
 			y_max          = level - 206
 		})
+		if is_50 then break end
 	end
 end
 ]]
 
--- for i = 1, 12 do
+for i = 1, 12 do
 
 	minetest.register_ore({
-		-- ore_type       = "scatter",
-		ore_type       = "stratum",
+		ore_type       = oretype_morlan_layer,
 		ore            = "air",
 		wherein        = {
 			"default:water_source", "default:water_flowing", "default:lava_source",
@@ -1012,7 +1014,8 @@ end
 		y_min          = level - 207,
 		y_max          = level - 45
 	})
--- end
+	if is_50 then break end
+end
 
 -- Place the buildings in the morlendor
 
