@@ -1,31 +1,53 @@
 # minetest mod nssb
 
-NSSB - Not So Simple Buildings
+BIOME map for nssm, the not so simple buildings
 
 ## information
 
-Mod to use with [NSSM - Not So Simple Mobs](https://github.com/taikedz-mt/nssm) or [Tenplus1's NSSM](https://notabug.org/TenPlus1/nssm)
+A MAPGEN mod for Not so simple mobs (NSSM mod) that add new spawners and new BIOME underground
 
-It adds buildings with monsters spawners around the world and the Morlendor dimension which can be reached by portals that spawns like the other buildings.
+It **add [buildings](#buildings) with monsters spawners around the world**, also 
+as feature **the [Morlendor](#mordenlor) dimension which can be reached by portals that spawns** 
+like the other buildings.
+
+***From the portal, you have to follow the same direction of travelling from the Shire to Mordor!
+Good luck!***
 
 ![screenshot.png](screenshot.png)
 
+#### Morlendor
+
+This is a new BIOME apart of the NSSM ones, it has a central temple where you appears, 
+the mobs there will be so hostile and the nodes will be pretty rare and hard to pick.
+
+There are many minerals (around ten new ones) and many new enemies (around six new ones).
+
+![screenshot-large.png](screenshot-large.png)
+
+#### Buildings
+
+This mod provides new forms of structures for living NSSM mobs, by example will provide 
+a new BIOME for each mob boos like kind event just the simpel BIOME from NSSM.
+
+There are many new structures (around 20 new) inclusive inside the already provides by the NSSM.
+
+
 ## Technical information
 
-This is a continuation of NPX Team's mod made by taikedz and only provides bugfixed by users contributions.
+This is a continuation of NPX Team's mod and currently provides bugfixeds and user contributions.
 
-No new features are developed yet!
+No new features are developed yet! Any new contribution please mantains most backguard compatibility.
 
 ### dependences:
 
 * nssm
 * tnt
+* mobs
 
 ### conflicts
 
-This mod adds a dimension in the depths of the map ; as such it is incompaitble with other mapgen mods that add underground worlds such as `nether`, `fun_caves` or `caverealms`.
-
-But is know to be the layer since -31000 so mods like `nether` can be configured to works.
+This mod adds a dimension in the depths of the map, the [Morlendor](#mordenlor), **configurable**,
+layer and in future autodetect the `nether` and `caverealms` layers to avoid conflicts.
 
 ### Nodes definitions
 
@@ -47,6 +69,62 @@ But is know to be the layer since -31000 so mods like `nether` can be configured
 | Vine                 | nssb:vine                 | ·Climbable ·Flamable · slab,Can be placed only on solid walls |
 | Liana                | nssb:Liana                | ·Same as Default Ladder except texture |
 
+### New buildings
+
+This mod automatically puts in map some special structures based on enemies and biomes:
+
+| build name mapgen   | build description biome    | frecuency    | biome |
+| ------------------- | -------------------------- | ------------ | ----- |
+| portal              | Portal center temple       | only one     | mordenlor |
+| spiaggiagranchius   |                            | often        | sand  |
+| acquagranchius      | struture for some marine   | often        |       |
+| ooteca              |                            | often        |       |
+| minuscolaooteca     |                            | often        | grass |
+| piccolaooteca       |                            | often        | grass |
+| arcate              |                            | often        | sand  |
+| grandepiramide      |                            | often        | dirt  |
+| collina             |                            | often        | grass |
+| megaformicaio       |                            | often        | grass |
+| antqueenhill        | antqueen trone inside ants | often        | grass |
+| rovine1             |                            | often        | grass |
+| rovine2             |                            | common       | stone |
+| rovine3             |                            | common       | grass |
+| rovine4             |                            | common       | grass |
+| rovine5             |                            | common       | grass |
+| rovine6             |                            | common       | grass |
+| rovine7             |                            | common       | grass |
+| rovine8             |                            | common       | grass |
+| rovine9             |                            | common       | grass |
+| rovine10            |                            | common       | grass |
+| bozzoli             |                            | common       | grass |
+| picco               |                            | often        | sand  |
+| piccoghiaccio       |                            | often        | snow  |
+| icehall             |                            | often        | ice   |
+| piccomoonheron      |                            | often        | snow  |
+| doppiopiccoghiaccio |                            | often        | snow  |
+| doppiopiccosabbia   |                            | often        | sand  |
+| piccoscrausics      |                            | often        | sand  |
+| fossasand           |                            | often        | sand  |
+| blocohouse          |                            | common       | stone |
+| bigblocohouse       |                            | common       | stone |
+| blocobiggesthouse   |                            | common       | stone |
+
+
+### Spawn definitions
+
+This mod automatically will spawms some specific enemies over the map:
+
+| monster      | nodes under    | nodes around    | moment where  | level where spawn    |
+| ------------ | -------------- | --------------- | ------------- | -------------------- |
+| nssm:morvy   | nssb:morentir  | nssb:morentir   | day and night | mordenlor/underground|
+| nssm:morbat1 | air            | nssb:morelentir | day and night | mordenlor |
+| nssm:morbat2 | air            | nssb:morelentir | day and night | mordenlor/underground|
+| nssm:morbat3 | air            | nssb:morelentir | day and night | mordenlor |
+| nssm:morlu   | nssb:morentir  | nssb:mornen     | day and night | mordenlor |
+| nssm:morde   | nssb:morentir  | nssb:mornar     | day and night | mordenlor |
+| nssm:mordain | nssb:morentir  | nssb:morentir   | day and night | mordenlor/underground|
+| nssm:morgut  | nssb:morentir  | nssb:morentir   | day and night | mordenlor/underground|
+
 ### CRafting definitions
 
 WIP
@@ -54,5 +132,11 @@ WIP
 # LICENSE
 
 * License: LGPLv2.1 or later
-    * Copyright NPX Team and Contributors
+    * Copyright 2016-2018 NPX Team and Contributors
+    * Copyright 2017-2019 taikedz
+    * Copyright 2021-2022 tenplus1
+    * Copyright 2021-2022 PICCORO Lenz McKAY @mckaygerhard
 * License for media: CC-BY-SA 4.0
+    * Copyright 2016-2018 NPX Team and Contributors
+
+Check [LICENSE.txt](LICENSE.txt)
