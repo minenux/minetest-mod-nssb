@@ -1,4 +1,5 @@
 local moreores = minetest.get_modpath("moreores")
+local is_50 = minetest.has_feature("object_use_texture_alpha")
 
 nssb.mymapgenis = tonumber(minetest.settings:get("mymapgenis")) or 7
 
@@ -14,6 +15,9 @@ local level = tonumber(minetest.settings:get("nssb.morlendor_level")) or -30000
 local posplace = {x = 0, y = level - 93, z = 0}
 local posmemory = {x = 0, y = level - 92, z = 0}
 local postest = {x = 5, y = level - 91, z = 6}
+
+-- ore type generation depending on minetest version
+local oretype_morlan_layer = is_50 and "stratum" or "scatter"
 
 function nssb_register_buildings(
 	build, -- name of the schematic
@@ -362,11 +366,12 @@ nssb_register_buildings ("blocobiggesthouse", 4, "default:stone", 0, "air",  0, 
 -- This dimension is "divided" in in 7 layer.
 -- 1st layer is indistructible, made of indistructible morentir
 
--- for i = 1, 9 do
+local ite = is_50 and 1 or 9
+
+for i = 1, ite do
 
 	minetest.register_ore({
-		--ore_type       = "scatter",
-		ore_type       = "stratum",
+		ore_type       = oretype_morlan_layer,
 		ore            = "nssb:indistructible_morentir",
 		wherein        = {
 			"default:water_source","default:water_flowing","default:gravel",
@@ -388,39 +393,18 @@ nssb_register_buildings ("blocobiggesthouse", 4, "default:stone", 0, "air",  0, 
 		y_min          = level - 44,
 		y_max          = level - 37
 	})
--- end
-
---[[
-if moreores then
-
-	for i = 1, 9 do
-
-		minetest.register_ore({
-			ore_type       = "scatter",
-			ore            = "nssb:indistructible_morentir",
-			wherein        = {
-				"moreores:mineral_tin", "moreores:mineral_silver",
-				"moreores:mineral_mithril"
-			},
-			clust_scarcity = 1,
-			clust_num_ores = 1,
-			clust_size     = 1,
-			y_min          = level - 44,
-			y_max          = level - 37
-		})
-	end
 end
-]]
 
 -- 2nd layer is "stalagmitic", have bats and morelentir
 
 local function replace2(old, new)
 
---	for i = 1, 9 do
+	local ite = is_50 and 1 or 9
+
+	for i = 1, ite do
 
 		minetest.register_ore({
-			-- ore_type       = "scatter",
-			ore_type       = "stratum",
+			ore_type       = oretype_morlan_layer,
 			ore            = new,
 			wherein        = old,
 			clust_scarcity = 1,
@@ -429,7 +413,7 @@ local function replace2(old, new)
 			y_min          = level - 65,
 			y_max          = level - 45
 		})
---	end
+	end
 end
 
 -- optimized list
@@ -445,33 +429,6 @@ replace2({"default:stone", "default:stone_with_coal", "default:stone_with_iron",
 replace2({"default:stone_with_tin", "moreores:mineral_tin", "moreores:mineral_silver",
 		"moreores:mineral_mithril"}, "air")
 
---[[
-replace2("default:stone", "nssb:morentir")
-replace2("default:stone_with_coal", "nssb:morelentir")
-replace2("default:stone_with_iron", "nssb:morelentir")
-replace2("default:stone_with_mese", "nssb:morelentir")
-replace2("default:stone_with_diamond", "nssb:morelentir")
-replace2("default:stone_with_gold", "nssb:morelentir")
-replace2("default:stone_with_copper", "nssb:morelentir")
-replace2("default:gravel", "nssb:morelentir")
-replace2("default:dirt", "nssb:morelentir")
-replace2("default:sand", "nssb:morelentir")
-replace2("default:water_source", "nssb:morelentir")
-replace2("default:water_flowing", "nssb:morelentir")
-replace2("default:lava_source", "nssb:morelentir")
-replace2("default:lava_flowing", "nssb:morelentir")
-replace2("default:mese_block", "nssb:morelentir")
-replace2({"nssb:ant_dirt", "default:stone", "default:cobble", "default:stonebrick",
-		"default:mossycobble", "default:desert_stone", "default:desert_cobble",
-		"default:desert_stonebrick", "default:sandstone", "default:sandstonebrick"},
-		"nssb:morelentir")
-
-if moreores then
-
-	replace2({"moreores:mineral_tin", "moreores:mineral_silver",
-			"moreores:mineral_mithril"}, "air")
-end
-]]
 
 minetest.register_ore({
 	ore_type        = "blob",
@@ -508,11 +465,12 @@ end
 
 -- 3rd layer is made by air
 
---for i = 1, 32 do
+local ite = is_50 and 1 or 32
+
+for i = 1, ite do
 
 	minetest.register_ore({
-		--ore_type       = "scatter",
-		ore_type       = "stratum",
+		ore_type       = oretype_morlan_layer,
 		ore            = "air",
 		wherein        = {
 			"nssb:ant_dirt", "default:stone", "default:cobble", "default:stonebrick",
@@ -533,29 +491,8 @@ end
 		y_min          = level - 93,
 		y_max          = level - 66
 	})
---end
-
---[[
-if moreores then
-
-	for i = 1, 9 do
-
-		minetest.register_ore({
-			ore_type       = "scatter",
-			ore            = "air",
-			wherein        = {
-				"moreores:mineral_tin", "moreores:mineral_silver",
-				"moreores:mineral_mithril"
-			},
-			clust_scarcity = 1,
-			clust_num_ores = 1,
-			clust_size     = 1,
-			y_min          = level - 93,
-			y_max          = level - 66
-		})
-	end
 end
-]]
+
 
 minetest.register_ore({
 	ore_type        = "blob",
@@ -694,11 +631,12 @@ minetest.register_ore({
 
 local function replace4(old, new)
 
---	for i = 1, 9 do
+	local ite = is_50 and 1 or 9
+
+	for i = 1, ite do
 
 		minetest.register_ore({
-			--ore_type       = "scatter",
-			ore_type       = "stratum",
+			ore_type       = oretype_morlan_layer,
 			ore            = new,
 			wherein        = old,
 			clust_scarcity = 1,
@@ -707,7 +645,7 @@ local function replace4(old, new)
 			y_min          = level - 107,
 			y_max          = level - 94
 		})
---	end
+	end
 end
 
 -- optimized list
@@ -725,33 +663,6 @@ replace4({"default:stone", "default:stone_with_tin", "moreores:mineral_tin",
 		"moreores:mineral_silver", "moreores:mineral_mithril"}, "nssb:morentir")
 replace4("default:mese_block", "nssb:life_energy_ore")
 
---[[
-replace4("default:stone", "nssb:morentir")
-replace4("default:stone_with_coal", "nssb:mornen")
-replace4("default:stone_with_iron", "air")
-replace4("default:stone_with_mese", "air")
-replace4("default:stone_with_diamond", "air")
-replace4("default:stone_with_gold", "air")
-replace4("default:stone_with_copper", "air")
-replace4("default:gravel", "nssb:morkemen")
-replace4("default:dirt", "nssb:morkemen")
-replace4("default:sand", "nssb:morkemen")
-replace4("default:lava_source", "nssb:mornen")
-replace4("default:lava_flowing", "nssb:mornen_flowing")
-replace4("default:water_source", "nssb:mornen")
-replace4("default:water_flowing", "nssb:mornen_flowing")
-replace4("default:mese_block", "nssb:life_energy_ore")
-replace4({"nssb:ant_dirt", "default:stone", "default:cobble", "default:stonebrick",
-		"default:mossycobble", "default:desert_stone", "default:desert_cobble",
-		"default:desert_stonebrick", "default:sandstone", "default:sandstonebrick"},
-		"nssb:morkemen")
-
-if moreores then
-
-	replace4({"moreores:mineral_tin", "moreores:mineral_silver",
-			"moreores:mineral_mithril"},"nssb:morentir")
-end
-]]
 
 minetest.register_ore({
 	ore_type       = "scatter",
@@ -790,11 +701,12 @@ minetest.register_ore({
 
 local function replace5(old, new)
 
---	for i = 1, 9 do
+	local ite = is_50 and 1 or 9
+
+	for i = 1, ite do
 
 		minetest.register_ore({
-			-- ore_type       = "scatter",
-			ore_type       = "stratum",
+			ore_type       = oretype_morlan_layer,
 			ore            = new,
 			wherein        = old,
 			clust_scarcity = 1,
@@ -803,7 +715,7 @@ local function replace5(old, new)
 			y_min          = level - 156,
 			y_max          = level - 108
 		})
---	end
+	end
 end
 
 minetest.register_ore({
@@ -842,43 +754,16 @@ replace5({"default:gravel", "default:dirt", "default:sand", "nssb:ant_dirt",
 		"default:sandstone", "default:sandstonebrick", "default:silver_sand"},
 		"nssb:morkemen")
 
---[[
-replace5("default:stone", "nssb:morentir")
-replace5("default:stone_with_coal", "nssb:life_energy_ore")
-replace5("default:stone_with_iron", "nssb:morentir")
-replace5("default:stone_with_mese", "nssb:morentir")
-replace5("default:stone_with_diamond", "nssb:life_energy_ore")
-replace5("default:stone_with_gold", "nssb:life_energy_ore")
-replace5("default:stone_with_copper", "nssb:morentir")
-replace5("default:gravel", "nssb:morkemen")
-replace5("default:dirt", "nssb:morkemen")
-replace5("default:sand", "nssb:morkemen")
-replace5("default:lava_source", "nssb:morentir")
-replace5("default:lava_flowing", "nssb:morentir")
-replace5("default:water_source", "nssb:mornen")
-replace5("default:water_flowing", "nssb:mornen_flowing")
-replace5("default:mese_block", "nssb:life_energy_ore")
-replace5({"nssb:ant_dirt", "default:stone", "default:cobble", "default:stonebrick",
-		"default:mossycobble", "default:desert_stone", "default:desert_cobble",
-		"default:desert_stonebrick", "default:sandstone", "default:sandstonebrick"},
-		"nssb:morkemen")
-
-if moreores then
-	replace5("moreores:mineral_tin", "nssb:life_energy_ore")
-	replace5("moreores:mineral_silver", "nssb:morentir")
-	replace5("moreores:mineral_mithril", "nssb:moranga")
-end
-]]
-
 -- 6th layer is underground with other caves and the special metal
 
 local function replace6(old, new)
 
---	for i = 1, 9 do
+	local ite = is_50 and 1 or 9
+
+	for i = 1, ite do
 
 		minetest.register_ore({
-			-- ore_type       = "scatter",
-			ore_type       = "stratum",
+			ore_type       = oretype_morlan_layer,
 			ore            = new,
 			wherein        = old,
 			clust_scarcity = 1,
@@ -887,7 +772,7 @@ local function replace6(old, new)
 			y_min          = level - 205,
 			y_max          = level - 157
 		})
---	end
+	end
 end
 
 -- optimized list
@@ -907,34 +792,6 @@ replace6({"default:gravel", "default:dirt", "default:sand", "nssb:ant_dirt",
 replace6("default:water_source", "nssb:mornen")
 replace6("default:water_flowing", "nssb:mornen_flowing")
 
---[[
-replace6("default:stone", "nssb:morentir")
-replace6("default:stone_with_coal", "nssb:life_energy_ore")
-replace6("default:stone_with_iron", "nssb:moranga")
-replace6("default:stone_with_mese", "nssb:moranga")
-replace6("default:stone_with_diamond", "nssb:life_energy_ore")
-replace6("default:stone_with_gold", "nssb:life_energy_ore")
-replace6("default:stone_with_copper", "nssb:moranga")
-replace6("default:gravel", "nssb:morkemen")
-replace6("default:dirt", "nssb:morkemen")
-replace6("default:sand", "nssb:morkemen")
-replace6("default:lava_source", "nssb:morentir")
-replace6("default:lava_flowing", "nssb:morentir")
-replace6("default:water_source", "nssb:mornen")
-replace6("default:water_flowing", "nssb:mornen_flowing")
-replace6("default:mese_block", "nssb:life_energy_ore")
-replace6({"nssb:ant_dirt", "default:stone", "default:cobble", "default:stonebrick",
-		"default:mossycobble", "default:desert_stone", "default:desert_cobble",
-		"default:desert_stonebrick", "default:sandstone", "default:sandstonebrick"},
-		"nssb:morkemen")
-
-if moreores then
-	replace6("moreores:mineral_tin", "nssb:life_energy_ore")
-	replace6("moreores:mineral_silver", "nssb:moranga")
-	replace6("moreores:mineral_mithril", "nssb:moranga")
-end
-]]
-
 minetest.register_ore({
 	ore_type       = "scatter",
 	ore            = "nssb:boum_morentir",
@@ -948,11 +805,12 @@ minetest.register_ore({
 
 -- 7th layer is indistructible
 
--- for i = 1, 9 do
+local ite = is_50 and 1 or 9
+
+for i = 1, ite do
 
 	minetest.register_ore({
-		-- ore_type       = "scatter",
-		ore_type       = "stratum",
+		ore_type       = oretype_morlan_layer,
 		ore            = "nssb:indistructible_morentir",
 		wherein        = {
 			"nssb:ant_dirt", "default:stone", "default:cobble", "default:stonebrick",
@@ -972,35 +830,15 @@ minetest.register_ore({
 		y_min          = level - 213,
 		y_max          = level - 206
 	})
--- end
-
---[[
-if moreores then
-
-	for i = 1, 9 do
-
-		minetest.register_ore({
-			ore_type       = "scatter",
-			ore            = "nssb:indistructible_morentir",
-			wherein        = {
-				"moreores:mineral_tin", "moreores:mineral_silver",
-				"moreores:mineral_mithril"
-			},
-			clust_scarcity = 1,
-			clust_num_ores = 1,
-			clust_size     = 1,
-			y_min          = level - 213,
-			y_max          = level - 206
-		})
-	end
 end
-]]
 
--- for i = 1, 12 do
+
+local ite = is_50 and 1 or 12
+
+for i = 1, ite do
 
 	minetest.register_ore({
-		-- ore_type       = "scatter",
-		ore_type       = "stratum",
+		ore_type       = oretype_morlan_layer,
 		ore            = "air",
 		wherein        = {
 			"default:water_source", "default:water_flowing", "default:lava_source",
@@ -1012,7 +850,7 @@ end
 		y_min          = level - 207,
 		y_max          = level - 45
 	})
--- end
+end
 
 -- Place the buildings in the morlendor
 
