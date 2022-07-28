@@ -1,13 +1,13 @@
 # minetest mod nssb
 
-BIOME map for nssm, the not so simple buildings
+BIOME integration for nssm, the not so simple buildings
 
 ## information
 
-A MAPGEN mod for Not so simple mobs (NSSM mod) that add new spawners and new BIOME underground
+A MAPGEN mod for Not so simple mobs (NSSM mod) that add spanners and new BIOME underground
 
-It **add [buildings](#buildings) with monsters spawners around the world**, also 
-as feature **the [Morlendor](#mordenlor) dimension which can be reached by portals that spawns** 
+It **add [buildings](#buildings) with monsters spanners around the world**, also
+as feature **the [Morlendor](#mordenlor) dimension which can be reached by portals that spawns**
 like the other buildings.
 
 ***From the portal, you have to follow the same direction of travelling from the Shire to Mordor!
@@ -125,7 +125,7 @@ This mod automatically will spawms some specific enemies over the map:
 | nssm:mordain | nssb:morentir  | nssb:morentir   | day and night | mordenlor/underground|
 | nssm:morgut  | nssb:morentir  | nssb:morentir   | day and night | mordenlor/underground|
 
-### CRafting definitions
+### Crafting definitions
 
 WIP
 
