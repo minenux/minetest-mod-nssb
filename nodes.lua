@@ -215,9 +215,9 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "nssb:morlamp",
 	recipe = {
-		{"nssb:morelentir_dust","nssb:morelentir_dust","nssb:morelentir_dust"},
-		{"nssb:morelentir_dust","nssb:morelentir_dust","nssb:morelentir_dust"},
-		{"nssb:morelentir_dust","nssb:morelentir_dust","nssb:morelentir_dust"}
+		{"nssm:morelentir_dust","nssm:morelentir_dust","nssm:morelentir_dust"},
+		{"nssm:morelentir_dust","nssm:morelentir_dust","nssm:morelentir_dust"},
+		{"nssm:morelentir_dust","nssm:morelentir_dust","nssm:morelentir_dust"}
 	}
 })
 
