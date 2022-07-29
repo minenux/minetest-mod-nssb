@@ -1,3 +1,8 @@
+v2.2 - 29-07-22
+ - Fix morlamp craft "nssb:morelentir_dust" not defined https://github.com/NPXcoot/nssb/issues/2
+ - Fix fix morenrir to morentir https://github.com/NPXcoot/nssb/pull/3/files
+ - Optimize morlendor map generation on newer engines using stratum ore type to generate layers
+
 v2.1 - 3rd Feb 2022 (Edited by TenPlus1)
  - Switch to new functions
  - Add configurable level in settings (nssb.morlendor_level)
