@@ -1,4 +1,5 @@
 local moreores = minetest.get_modpath("moreores")
+local nethermod = minetest.get_modpath("nether")
 local is_50 = nssb.is_50
 
 nssb.mymapgenis = tonumber(minetest.settings:get("mymapgenis")) or 7
@@ -6,11 +7,13 @@ if nssb.mymapgenis ~= 6 and nssb.mymapgenis ~= 7 then
 	nssb.mymapgenis = 7
 end
 
--- get gneration level from settings
+-- mapgen limits check from minetest
+local mapgen_limit = tonumber(minetest.settings:get("mapgen_limit")) or 31000
+
+-- get generation level from settings
 local level = tonumber(minetest.settings:get("nssb.morlendor_level")) or -30000
 
 -- schematics generation
-
 local posplace = {x = 0, y = level - 93, z = 0}
 local posmemory = {x = 0, y = level - 92, z = 0}
 local postest = {x = 5, y = level - 91, z = 6}
@@ -18,6 +21,30 @@ local postest = {x = 5, y = level - 91, z = 6}
 -- ore type generation depending on minetest version
 local oretype_morlan_layer
 if is_50 then oretype_morlan_layer       = "stratum"  else  oretype_morlan_layer       = "scatter" end
+
+-- mapgen limit must be at least enought before any check
+if mapgen_limit < 400 then error("[nssb] the map limit is too low, there's no space for morlendor") end
+
+-- morlendor must be inside the limits, but not almost the limit of the world, and must be almost 320 levels
+level_amount_and_limit = math.abs(mapgen_limit) - math.abs(level)
+
+while level_amount_and_limit <= 320 do
+
+	level = (math.abs(level) - math.abs(level_amount_and_limit) - 1) * -1
+	level_amount_and_limit = math.abs(mapgen_limit) - math.abs(level)
+
+	minetest.log("error", "[nssb] incompatible morlendor level, autosetting: ".. level)
+end
+
+-- detection of nether deep floor, mordenlor must be below more than player things, cos has industructible layer
+if nethermod then
+
+	local nether_df = math.abs(tonumber(minetest.settings:get("nether_depth_ymax")) or -11000)
+
+	if ( math.abs(nether_df) >= math.abs(level) + 1000 ) then
+		error("[nssb] morlendor level conflicts with nether, unable to fix, check your settings")
+	end
+end
 
 function nssb_register_buildings(
 	build, -- name of the schematic

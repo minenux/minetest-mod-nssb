@@ -48,10 +48,16 @@ No new features are developed yet! Any new contribution please mantains most bac
 * tnt
 * mobs
 
-#### conflicts
+#### configurations
 
-This mod adds a dimension in the depths of the map, the [Morlendor](#mordenlor), **configurable**,
-layer and in future autodetect the `nether` and `caverealms` layers to avoid conflicts.
+This mod adds a dimension in the depths of the map, the [Morlendor](#mordenlor), **configurable**
+using the `nssb.morlendor_level` parameter as negative integer:
+
+* If `nssb.morlendor_level` is outside of `mapgen_limit`, the mod will try to autoset best setting.
+* If `nssb.morlendor_level` it overlap `nether_depth_ymax`, of nether mod, an error will raise.
+
+The morlendor level must be at least 320 layers of blocks over the limit, 
+and 1000 layers of blocks below the nether deep floor.
 
 ### New buildings
 
